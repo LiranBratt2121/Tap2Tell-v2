@@ -1,0 +1,1 @@
+export type Letters = "Alef" | "Bet" | "Gimel" | "Dalet" | "He" | "Vav" | "Zayin" | "Het" | "Tet" | "Yod" | "Kaf" | "Lamed" | "Mem" | "Nun" | "Samech" | "Ayin" | "Peh" | "Tsadeh" | "Qof" | "Resh" | "Shin" | "Tav";
