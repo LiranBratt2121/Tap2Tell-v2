@@ -36,4 +36,5 @@ export const Header = styled.h1`
     color: ${props => props.theme.colors.text};
     font-size: ${props => props.theme.fontSizes.bigger};
     z-index: 10;
+    white-space: nowrap;
 `;
