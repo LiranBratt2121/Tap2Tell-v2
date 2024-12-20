@@ -8,16 +8,15 @@ import { getAnalytics } from "firebase/analytics";
 
 export const startFirebase = () => {
     const firebaseConfig = {
-        apiKey: "AIzaSyCNumIq9CBBUca36uad2LbZlWn39yIEBO0",
-        authDomain: "tap2tellv2.firebaseapp.com",
-        projectId: "tap2tellv2",
-        storageBucket: "tap2tellv2.firebasestorage.app",
-        messagingSenderId: "851751899931",
-        appId: "1:851751899931:web:a732908f2ad829904779be",
-        measurementId: "G-Q92LLY7WNR"
+        apiKey: "AIzaSyBWhPtuek-ATk9lQLTryYMfyywkVjq3eng",
+        authDomain: "tap2tell-efadc.firebaseapp.com",
+        projectId: "tap2tell-efadc",
+        storageBucket: "tap2tell-efadc.firebasestorage.app",
+        messagingSenderId: "761719365935",
+        appId: "1:761719365935:web:1fdfcba2a0009ba88181da",
+        measurementId: "G-ZKNGR5PVGW"
     };
-    
-    // Initialize Firebase
+
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
 }
