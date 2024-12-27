@@ -8,13 +8,13 @@ import { getAnalytics } from "firebase/analytics";
 
 export const startFirebase = () => {
     const firebaseConfig = {
-        apiKey: "AIzaSyBWhPtuek-ATk9lQLTryYMfyywkVjq3eng",
-        authDomain: "tap2tell-efadc.firebaseapp.com",
-        projectId: "tap2tell-efadc",
-        storageBucket: "tap2tell-efadc.firebasestorage.app",
-        messagingSenderId: "761719365935",
-        appId: "1:761719365935:web:1fdfcba2a0009ba88181da",
-        measurementId: "G-ZKNGR5PVGW"
+    apiKey: "AIzaSyAMbppAVrauuJ6z-FMozekgv8RhXk-Hp8c",
+    authDomain: "tap2-fc536.firebaseapp.com",
+    projectId: "tap2-fc536",
+    storageBucket: "tap2-fc536.firebasestorage.app",
+    messagingSenderId: "225711342177",
+    appId: "1:225711342177:web:859830f79e6e64264c2020",
+    measurementId: "G-T2Y66T6BMV"
     };
 
     const app = initializeApp(firebaseConfig);
