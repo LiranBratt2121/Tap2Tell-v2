@@ -1,13 +1,12 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from "react-router-dom"
 
 const Result = () => {
-    const { imgLink } = useParams();
-    
-    return (
-        <div>
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const imgurl = params.get("imgurl") || "";
 
-        </div>
+    return (
+        <img src={imgurl} alt="captured" />
     )
 }
 
