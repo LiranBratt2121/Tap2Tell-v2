@@ -4,7 +4,6 @@ import { letters } from '../dashboard/utils';
 import { IoMdReturnLeft } from "react-icons/io";
 import { Camera, CameraProps, CameraType } from 'react-camera-pro';
 import { Back, Button, CameraContainer, CameraView } from './styles.capture';
-import { isBase64 } from './utis';
 import uploadToStorage from '../../firebase/uploadToStorage';
 
 const Capture: React.FC = () => {
@@ -60,12 +59,10 @@ const Capture: React.FC = () => {
     const handleCapture = async () => {
         const screenshot = cameraRef.current?.takePhoto('base64url') as string;
 
-        if (!isBase64(screenshot)) {
-            return;
-        }
-
         const url = await uploadToStorage(screenshot);
-        navigate(`/result/${url}`);
+        const encodedURL = encodeURIComponent(url); 
+
+        navigate(`/result?imgurl=${encodedURL}`);
     };
 
 
