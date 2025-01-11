@@ -1,9 +1,14 @@
 import { Letters } from "../../components/letterBox/types.letterBox";
 
 type Results = {
-    chosenCharacter: Letters;
-    detectedCharacter: Letters;
-    isRight: boolean;
+    detectedCharacter: Prediction;
+    top3: Prediction[];
 }
 
-export type { Results };
+type Prediction = {
+    class: Letters;
+    class_id: string;
+    confidence: string;
+}
+
+export type { Results, Prediction };
