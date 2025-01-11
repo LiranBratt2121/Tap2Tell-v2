@@ -22,6 +22,7 @@ export const Button = styled.button`
     border-radius: 10rem;
     background-color: snow;
     cursor: pointer;
+    z-index: 101;
 `
 
 export const Back = styled.button`
@@ -32,4 +33,5 @@ export const Back = styled.button`
     transform: translateY(5%);
     background-color: ${props => props.theme.colors.primary};
     cursor: pointer;
+    z-index: 100;
 `;
