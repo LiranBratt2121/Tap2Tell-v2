@@ -16,6 +16,7 @@ declare module 'styled-components' {
             medium: string;
             bigger: string;
             large: string;
+            huge: string;
         };
     }
 }
@@ -35,5 +36,6 @@ export const theme: DefaultTheme = {
         medium: '1.5rem',
         bigger: '2rem',
         large: '3rem',
+        huge: '5rem'
     },
 };
