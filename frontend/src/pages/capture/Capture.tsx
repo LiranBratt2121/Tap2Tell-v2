@@ -26,7 +26,7 @@ const Capture: React.FC = () => {
                 return;
             }
 
-            setAspectRatio(ratio > 0.6 ? (16 / 9) : (9 / 16));
+            setAspectRatio(ratio > 0.61 ? (16 / 9) : (9 / 16));
         };
 
         updateAspectRatio();
@@ -60,7 +60,7 @@ const Capture: React.FC = () => {
         const screenshot = cameraRef.current?.takePhoto('base64url') as string;
 
         const url = await uploadToStorage(screenshot);
-        const encodedURL = encodeURIComponent(url); 
+        const encodedURL = encodeURIComponent(url);
 
         navigate(`/result?imgurl=${encodedURL}&letter=${letter}`);
     };
