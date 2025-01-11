@@ -10,6 +10,7 @@ export const ResultContainer = styled.div`
     height: 100vh;
     width: 100vw;
     background-image: url(${skyImage});
+    background-size: cover;
     overflow: hidden;
     box-sizing: border-box;
 `;
@@ -17,8 +18,8 @@ export const ResultContainer = styled.div`
 export const WaitGif = styled.img`
     height: 100%;
     width: 100%;
-    object-fit: cover;  /* Ensures the gif covers the entire container */
-    position: absolute; /* Make sure it's positioned in relation to the container */
+    object-fit: cover;
+    position: absolute;
     top: 0;
     left: 0;
 `;
@@ -30,6 +31,17 @@ export const Header = styled.h1`
     color: ${props => props.theme.colors.text};
     text-align: center;
     margin-bottom: 2vw;
+`;
+
+export const CounterText = styled.h1`
+    font-size: ${props => props.theme.fontSizes.huge};
+    color: ${props => props.theme.colors.text};
+    font-weight: bold;
+    text-shadow: 0px 1px 0px black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 `;
 
 export const ButtonContainer = styled.div`
