@@ -5,6 +5,8 @@ import { IoMdReturnLeft } from "react-icons/io";
 import { Camera, CameraProps, CameraType } from 'react-camera-pro';
 import { Back, Button, CameraContainer, CameraView } from './styles.capture';
 import uploadToStorage from '../../firebase/uploadToStorage';
+import ShowcaseLetter from '../../components/showcaseLetter/ShowcaseLetter';
+import { Letters } from '../../components/letterBox/types.letterBox';
 
 const Capture: React.FC = () => {
     const { letter } = useParams();
@@ -88,6 +90,7 @@ const Capture: React.FC = () => {
 
                 </Button>
             </CameraView>
+            <ShowcaseLetter letter={letter as Letters} />
         </CameraContainer>
     );
 };
