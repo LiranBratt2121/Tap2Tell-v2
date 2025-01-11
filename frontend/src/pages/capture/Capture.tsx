@@ -62,7 +62,7 @@ const Capture: React.FC = () => {
         const url = await uploadToStorage(screenshot);
         const encodedURL = encodeURIComponent(url); 
 
-        navigate(`/result?imgurl=${encodedURL}`);
+        navigate(`/result?imgurl=${encodedURL}&letter=${letter}`);
     };
 
 
