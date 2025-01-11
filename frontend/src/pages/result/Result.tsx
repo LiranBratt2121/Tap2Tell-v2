@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import askModel from "../../firebase/askModel";
 import { Results } from "../capture/types.capture";
-import { Button, ButtonContainer, ResultContainer, WaitGif } from "./styles.result";
+import { Button, ButtonContainer, CounterText, ResultContainer, WaitGif } from "./styles.result";
 import skyConfettiGif from "../../assets/skyconfetti.gif";
 import { isRight } from "./utils";
 import { Letters } from "../../components/letterBox/types.letterBox";
@@ -14,8 +14,19 @@ const Result = () => {
     const imgurl = params.get("imgurl") || "";
     const letter = params.get("letter") as Letters || "";
 
+    const Background = memo(() => <WaitGif src={skyConfettiGif} />);
+
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<Results | null>(null);
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCount(prev => prev + 1);
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [])
 
     useEffect(() => {
         if (!(letter && imgurl)) {
@@ -54,7 +65,12 @@ const Result = () => {
     }, [imgurl, navigate]);
 
     if (loading) {
-        return <WaitGif src={skyConfettiGif} />;
+        return (
+            <>
+                <Background />
+                <CounterText>{count}</CounterText>
+            </>
+        );
     }
 
     return (
