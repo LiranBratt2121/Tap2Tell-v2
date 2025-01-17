@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import Sky from "../../assets/sky.png"
 
 export const DashboardContainer = styled.div`
     display: flex;
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-image: url("/src/assets/sky.png");
+    background-image: url(${Sky});
     background-size: cover;
 `;
 export const LettersContainer = styled.div`
