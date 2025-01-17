@@ -1,8 +1,8 @@
 import React from 'react'
 import { Letters } from './types.letterBox'
 import { Image } from './styles.letterBox'
-import { letters2images } from '../../pages/dashboard/utils'
 import { useNavigate } from 'react-router-dom';
+import { letterAssets } from '../showcaseLetter/utils';
 
 interface LetterBoxProps {
   letter: Letters;
@@ -13,7 +13,7 @@ const LetterBox: React.FC<LetterBoxProps> = ({ letter }) => {
 
   return (
     <Image
-      src={letters2images[letter]}
+      src={letterAssets[letter].image}
       alt={`Letter ${letter}`}
       onClick={() => setTimeout(() => navigate(`/capture/${letter}`), 500)}
     />)
