@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import Sky from "../../assets/sky.png"
 
 export const CameraContainer = styled.div`
     width: 100vw;
     height: 100vh;
-    background-image: url("/src/assets/sky.png");
+    background-image: url(${Sky});
 `;
 
 export const CameraView = styled.div`
