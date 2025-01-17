@@ -1,4 +1,4 @@
-import { Prediction, Results } from "../pages/capture/types.capture";
+import { Prediction } from "../pages/capture/types.capture";
 import axios from 'axios';
 
 const getTop3 = (predictions: Prediction[]) => {
