@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { FormContainer, LoginContainer, Title } from './styles.login';
 import GoogleButton from 'react-google-button';
 import signInWithGoogle from '../../firebase/signInWithGoogle';
