@@ -2,10 +2,11 @@ import { memo, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import askModel from "../../firebase/askModel";
 import { Results } from "../capture/types.capture";
-import { Button, ButtonContainer, CounterText, ResultContainer, WaitGif } from "./styles.result";
+import { Button, ButtonContainer, CounterText, Header, LetterImage, ResultBody, ResultContainer, ResultImage, SeconderyHeader, WaitGif } from "./styles.result";
 import skyConfettiGif from "../../assets/skyconfetti.gif";
-import { isRight } from "./utils";
+import { isRight, playResultSound } from "./utils";
 import { Letters } from "../../components/letterBox/types.letterBox";
+import { letterAssets } from "../../components/showcaseLetter/utils";
 
 const Result = () => {
     const navigate = useNavigate();
@@ -17,7 +18,9 @@ const Result = () => {
     const Background = memo(() => <WaitGif src={skyConfettiGif} />);
 
     const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState<Results | null>(null);
+    const [letterCorrect, isLetterCorrect] = useState(false);
+
+    const [_, setResults] = useState<Results | null>(null);
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -51,7 +54,21 @@ const Result = () => {
             try {
                 setLoading(true);
                 const response = await askModel(imgurl);
+                const isLetterRight = isRight(response, letter);
+                isLetterCorrect(isLetterRight);
+
+                setTimeout(() => {
+                    const resultAudio = playResultSound(isLetterRight);
+
+                    resultAudio.onended = () => {
+                        resultAudio.pause()
+                        resultAudio.currentTime = 0;
+                        resultAudio.remove();
+                    };
+                }, 300)
+
                 setResults(response);
+                console.log(`Results: ${response.top3.map(c => c.class)}`)
             } catch (e) {
                 console.error("An error occurred with the model: ", e);
                 alert("Try again");
@@ -64,6 +81,7 @@ const Result = () => {
         sendToApi();
     }, [imgurl, navigate]);
 
+
     if (loading) {
         return (
             <>
@@ -73,10 +91,16 @@ const Result = () => {
         );
     }
 
+
     return (
         <ResultContainer>
-            {isRight(results, letter) ? <p>כל הכבוד!</p> : <p>תנסו שוב!</p>}
-            {results ? <p>{JSON.stringify(results)}</p> : <p>No results available</p>}
+            <ResultBody>
+                <Header>{letterCorrect ? "!כל הכבוד" : "!נסו שוב"}</Header>
+                {!letterCorrect && <SeconderyHeader>{"האות הנכונה"}</SeconderyHeader>}
+                <LetterImage src={letterAssets[letter].image} />
+                <ResultImage src={imgurl} />
+            </ResultBody>
+
             <ButtonContainer>
                 <Button onClick={() => navigate("/dashboard")}>חזור</Button>
             </ButtonContainer>
