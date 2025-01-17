@@ -1,4 +1,5 @@
-import styled, { } from 'styled-components';
+import styled from 'styled-components';
+import Sky from "../../assets/sky.png"
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ export const LoginContainer = styled.div`
   border-radius: 1rem;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
   height: 100vh;
-  background-image: url("src/assets/sky.png");
+  background-image: url(${Sky});
   background-size: cover;
 `;
 
