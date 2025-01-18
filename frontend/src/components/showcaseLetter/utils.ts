@@ -50,6 +50,9 @@ import TavAudio from "../../assets/audio/Tav.mp3";
 import SuccessAudio from "../../assets/audio/Success.mp3";
 import FailureAudio from "../../assets/audio/faliure.mp3";
 
+// Other
+import Counter from "../../assets/audio/Counter.mp3"
+
 import { LetterAssetsProps } from "./types.leterBox";
 
 
@@ -81,4 +84,5 @@ export const letterAssets: LetterAssetsProps = {
 export const additionalAssets = {
     Success: SuccessAudio,
     Failure: FailureAudio,
+    Counter: Counter
 };
