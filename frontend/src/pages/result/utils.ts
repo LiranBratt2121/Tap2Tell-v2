@@ -19,3 +19,19 @@ export const playResultSound = (isRight: boolean) => {
 
     return resultAudio;
 };
+
+export const playWaitSound = () => {
+    const sound = additionalAssets.Counter;
+    const waitAudio = new Audio(sound);
+    waitAudio.loop = true;
+    
+    waitAudio.play()
+
+    const stop = () => {
+        waitAudio.pause();
+        waitAudio.currentTime = 0;
+        waitAudio.remove();
+    };
+
+    return stop;
+}
