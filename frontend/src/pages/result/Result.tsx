@@ -4,7 +4,7 @@ import askModel from "../../firebase/askModel";
 import { Results } from "../capture/types.capture";
 import { Button, ButtonContainer, CounterText, Header, LetterImage, ResultBody, ResultContainer, ResultImage, SeconderyHeader, WaitGif } from "./styles.result";
 import skyConfettiGif from "../../assets/skyconfetti.gif";
-import { isRight, playResultSound } from "./utils";
+import { isRight, playResultSound, playWaitSound } from "./utils";
 import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/utils";
 
@@ -51,6 +51,7 @@ const Result = () => {
         }
 
         const sendToApi = async () => {
+            const stopWaitSound = playWaitSound();
             try {
                 setLoading(true);
                 const response = await askModel(imgurl);
@@ -75,6 +76,7 @@ const Result = () => {
                 navigate("/dashboard");
             } finally {
                 setLoading(false);
+                stopWaitSound();
             }
         };
 
