@@ -22,6 +22,8 @@ const Result = () => {
 
     const [_, setResults] = useState<Results | null>(null);
     const [count, setCount] = useState(0);
+    const debug = true;
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -54,8 +56,34 @@ const Result = () => {
             const stopWaitSound = playWaitSound();
             try {
                 setLoading(true);
-                const response = await askModel(imgurl);
-                const isLetterRight = isRight(response, letter);
+                // const response = await askModel(imgurl);
+
+                const response: Results = debug ? 
+                {
+                    detectedCharacter: {
+                        class: "Alef",
+                        class_id: "1",
+                        confidence: "0.98",
+                    },
+                    top3: [
+                        {
+                            class: "Alef",
+                            class_id: "1",
+                            confidence: "0.98",
+                        },
+                        {
+                            class: "Bet",
+                            class_id: "2",
+                            confidence: "0.85",
+                        },
+                        {
+                            class: "Gimel",
+                            class_id: "3",
+                            confidence: "0.75",
+                        },
+                    ],
+                } : await askModel(imgurl);
+                
                 isLetterCorrect(isLetterRight);
 
                 setTimeout(() => {
