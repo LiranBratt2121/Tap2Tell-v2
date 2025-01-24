@@ -81,7 +81,7 @@ const Capture: React.FC = () => {
                 <Back
                     onClick={() => navigate("/dashboard")}
                 >
-                    <IoMdReturnLeft />
+                    <IoMdReturnLeft size={35}/>
                 </Back>
 
                 <Button
