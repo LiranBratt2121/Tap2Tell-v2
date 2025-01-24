@@ -31,7 +31,7 @@ const Result = () => {
         }, 1000);
 
         return () => clearInterval(intervalId);
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (!(letter && imgurl)) {
@@ -52,8 +52,9 @@ const Result = () => {
             return;
         }
 
+        let stopWaitSound: () => void;
         const sendToApi = async () => {
-            const stopWaitSound = playWaitSound();
+            stopWaitSound = playWaitSound();
             try {
                 setLoading(true);
                 // const response = await askModel(imgurl);
@@ -84,20 +85,21 @@ const Result = () => {
                     ],
                 } : await askModel(imgurl);
                 
+                const isLetterRight = isRight(response, letter)
                 isLetterCorrect(isLetterRight);
 
                 setTimeout(() => {
                     const resultAudio = playResultSound(isLetterRight);
 
                     resultAudio.onended = () => {
-                        resultAudio.pause()
+                        resultAudio.pause();
                         resultAudio.currentTime = 0;
                         resultAudio.remove();
                     };
-                }, 300)
+                }, 300);
 
                 setResults(response);
-                console.log(`Results: ${response.top3.map(c => c.class)}`)
+                console.log(`Results: ${response.top3.map(c => c.class)}`);
             } catch (e) {
                 console.error("An error occurred with the model: ", e);
                 alert("Try again");
@@ -109,6 +111,8 @@ const Result = () => {
         };
 
         sendToApi();
+
+        return () => stopWaitSound();
     }, [imgurl, navigate]);
 
 
