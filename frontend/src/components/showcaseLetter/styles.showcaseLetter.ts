@@ -14,6 +14,6 @@ export const Overlay = styled.div`
 
 export const AnimatedPopup = styled(animated.img)`
   height: 60%;
-  width: 90%;
+  width: 80%;
   z-index: 10;
 `;
