@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import skyImage from "../../assets/sky.png";
+import SkyImage from "../../assets/sky.png";
 
-// Container for entire page content
 export const ResultContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -9,7 +8,7 @@ export const ResultContainer = styled.div`
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    background-image: url(${skyImage});
+    background-image: url(${SkyImage});
     background-size: cover;
     overflow: hidden;
     box-sizing: border-box;
@@ -40,20 +39,12 @@ export const ResultBody = styled.div`
 `;
 
 export const ResultImage = styled.img`
-    max-width: 50%;
-    max-height: 40%;
+    max-width: 100%;
+    max-height: 100%;
     margin-bottom: 0.5rem;
     border-radius: 0.2rem;
     display: block;
-    object-fit: cover;
-    border: solid rgba(0, 0, 0, 0.5);
-
-    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.5);
-
-    @media only screen and (max-width: 870px) {
-        max-width: 85%;
-        max-height: 60%;
-    }
+    z-index: -1;
 `;
 
 export const LetterImage = styled.img`
