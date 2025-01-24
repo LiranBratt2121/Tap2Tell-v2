@@ -32,9 +32,9 @@ export const ResultBody = styled.div`
     padding-bottom: 3rem;
     text-wrap: nowrap;
 
-    @media only screen and (max-width: 844px) {
-        height: 40vh;
-        width: 50vw;
+    @media only screen and (max-width: 870px) {
+        height: 70vh;
+        width: 80vw;
         padding-bottom: 0.5rem;
     }
 `;
@@ -45,12 +45,14 @@ export const ResultImage = styled.img`
     margin-bottom: 0.5rem;
     border-radius: 0.2rem;
     display: block;
-    object-fit: contain;
+    object-fit: cover;
+    border: solid rgba(0, 0, 0, 0.5);
+
     box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.5);
 
-    @media only screen and (max-width: 844px) {
-        max-width: 50%;
-        max-height: 50%;
+    @media only screen and (max-width: 870px) {
+        max-width: 85%;
+        max-height: 60%;
     }
 `;
 
@@ -60,10 +62,11 @@ export const LetterImage = styled.img`
     border-radius: 1rem;
     display: block;
     object-fit: contain;
+    margin: 0.2rem;
 
-    @media only screen and (max-width: 844px) {
+    @media only screen and (max-width: 870px) {
         max-width: 50%;
-        max-height: 30%;
+        max-height: 40%;
     }
 `;
 
@@ -84,8 +87,8 @@ export const Header = styled.h1`
     text-align: center;
     margin: 0;
 
-    @media only screen and (max-width: 600px) {
-        font-size: 2rem;
+    @media only screen and (max-width: 870px) {
+        font-size: 3rem;
     }
 `;
 
@@ -97,8 +100,8 @@ export const SeconderyHeader = styled.h1`
     text-align: center;
     margin: 0;
 
-    @media only screen and (max-width: 600px) {
-        font-size: 1.2rem;
+    @media only screen and (max-width: 870px) {
+        font-size: 2.5rem;
     }
 `;
 
@@ -129,7 +132,7 @@ export const Button = styled.div`
     color: white;
     border-radius: 0.5rem;
     cursor: pointer;
-    font-size: ${props => props.theme.fontSizes.small};
+    font-size: ${props => props.theme.fontSizes.bigger};
     text-shadow: 0px 1px 0px black;
     color: ${props => props.theme.colors.text};
 `;
