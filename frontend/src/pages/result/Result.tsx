@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import askModel from "../../firebase/askModel";
 import { Results } from "../capture/types.capture";
@@ -7,6 +7,7 @@ import skyConfettiGif from "../../assets/skyconfetti.gif";
 import { isRight, playResultSound, playWaitSound } from "./utils";
 import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/utils";
+import StarBorder from "../../components/border/Border";
 
 const Result = () => {
     const navigate = useNavigate();
@@ -22,8 +23,10 @@ const Result = () => {
 
     const [_, setResults] = useState<Results | null>(null);
     const [count, setCount] = useState(0);
+
     const debug = true;
 
+    const imageRef = useRef<HTMLImageElement>(null); // Create ref for ResultImage
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -115,7 +118,6 @@ const Result = () => {
         return () => stopWaitSound();
     }, [imgurl, navigate]);
 
-
     if (loading) {
         return (
             <>
@@ -125,19 +127,18 @@ const Result = () => {
         );
     }
 
-
     return (
         <ResultContainer>
             <ResultBody>
                 <Header>{letterCorrect ? "!כל הכבוד" : "!נסו שוב"}</Header>
                 {!letterCorrect && <SeconderyHeader>{"האות הנכונה"}</SeconderyHeader>}
                 <LetterImage src={letterAssets[letter].image} />
-                <ResultImage src={imgurl} />
+                <StarBorder won={letterCorrect}><ResultImage ref={imageRef} src={imgurl} /></StarBorder>
             </ResultBody>
 
             <ButtonContainer>
                 <Button onClick={() => navigate("/dashboard")}>חזור</Button>
-            </ButtonContainer>
+             </ButtonContainer>
         </ResultContainer>
     );
 };
