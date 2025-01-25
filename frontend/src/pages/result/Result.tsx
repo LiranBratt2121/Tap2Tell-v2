@@ -1,10 +1,10 @@
-import React, { memo, useEffect, useState, useRef } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import askModel from "../../firebase/askModel";
 import { Results } from "../capture/types.capture";
 import { Button, ButtonContainer, CounterText, Header, LetterImage, ResultBody, ResultContainer, ResultImage, SeconderyHeader, WaitGif } from "./styles.result";
 import skyConfettiGif from "../../assets/skyconfetti.gif";
-import { isRight, playResultSound, playWaitSound } from "./utils";
+import { isRight, playResultSound, playSuccessBellsSound, playWaitSound } from "./utils";
 import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/utils";
 import StarBorder from "../../components/border/Border";
@@ -56,50 +56,45 @@ const Result = () => {
         }
 
         let stopWaitSound: () => void;
+        let stopResultSound: () => void;
+        let stopSuccessBellsSound: () => void;
+
         const sendToApi = async () => {
             stopWaitSound = playWaitSound();
             try {
                 setLoading(true);
-                // const response = await askModel(imgurl);
 
-                const response: Results = debug ? 
-                {
-                    detectedCharacter: {
-                        class: "Alef",
-                        class_id: "1",
-                        confidence: "0.98",
-                    },
-                    top3: [
-                        {
+                const response: Results = debug ?
+                    {
+                        detectedCharacter: {
                             class: "Alef",
                             class_id: "1",
                             confidence: "0.98",
                         },
-                        {
-                            class: "Bet",
-                            class_id: "2",
-                            confidence: "0.85",
-                        },
-                        {
-                            class: "Gimel",
-                            class_id: "3",
-                            confidence: "0.75",
-                        },
-                    ],
-                } : await askModel(imgurl);
-                
+                        top3: [
+                            {
+                                class: "Alef",
+                                class_id: "1",
+                                confidence: "0.98",
+                            },
+                            {
+                                class: "Bet",
+                                class_id: "2",
+                                confidence: "0.85",
+                            },
+                            {
+                                class: "Gimel",
+                                class_id: "3",
+                                confidence: "0.75",
+                            },
+                        ],
+                    } : await askModel(imgurl);
+
                 const isLetterRight = isRight(response, letter)
                 isLetterCorrect(isLetterRight);
 
-                setTimeout(() => {
-                    const resultAudio = playResultSound(isLetterRight);
-
-                    resultAudio.onended = () => {
-                        resultAudio.pause();
-                        resultAudio.currentTime = 0;
-                        resultAudio.remove();
-                    };
-                }, 300);
+                stopSuccessBellsSound = isLetterRight ? playSuccessBellsSound() : () => { };
+                stopResultSound = playResultSound(isLetterRight);
 
                 setResults(response);
                 console.log(`Results: ${response.top3.map(c => c.class)}`);
@@ -115,7 +110,11 @@ const Result = () => {
 
         sendToApi();
 
-        return () => stopWaitSound();
+        return () => {
+            stopWaitSound();
+            stopResultSound();
+            stopSuccessBellsSound();
+        };
     }, [imgurl, navigate]);
 
     if (loading) {
@@ -138,7 +137,7 @@ const Result = () => {
 
             <ButtonContainer>
                 <Button onClick={() => navigate("/dashboard")}>חזור</Button>
-             </ButtonContainer>
+            </ButtonContainer>
         </ResultContainer>
     );
 };
