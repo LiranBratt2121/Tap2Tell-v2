@@ -52,6 +52,7 @@ import FailureAudio from "../../assets/audio/faliure.mp3";
 
 // Other
 import Counter from "../../assets/audio/Counter.mp3"
+import SuccessBells from "../../assets/audio/successBells.mp3"
 
 import { LetterAssetsProps } from "./types.leterBox";
 
@@ -84,5 +85,6 @@ export const letterAssets: LetterAssetsProps = {
 export const additionalAssets = {
     Success: SuccessAudio,
     Failure: FailureAudio,
-    Counter: Counter
+    Counter: Counter,
+    SuccessBells: SuccessBells
 };
