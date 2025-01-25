@@ -6,10 +6,10 @@ export const isRight = (results: Results | null, trueCharacter: Letters | null):
     if (!results) {
         return false;
     }
-    
+
     const top3 = results.top3;
 
-    return top3.some((curr) => curr.class === trueCharacter); 
+    return top3.some((curr) => curr.class === trueCharacter);
 }
 
 export const playResultSound = (isRight: boolean) => {
@@ -30,13 +30,30 @@ export const playResultSound = (isRight: boolean) => {
 
     return stop;
 };
-};
+
+export const playSuccessBellsSound = () => {
+    const audio = new Audio(additionalAssets.SuccessBells);
+    audio.play();
+
+    const stop = () => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.remove();
+    };
+
+    audio.onended = () => {
+        stop();
+    }
+
+    return stop;
+}
+
 
 export const playWaitSound = () => {
     const sound = additionalAssets.Counter;
     const waitAudio = new Audio(sound);
     waitAudio.loop = true;
-    
+
     waitAudio.play()
 
     const stop = () => {
