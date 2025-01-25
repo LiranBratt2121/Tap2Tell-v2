@@ -14,10 +14,22 @@ export const isRight = (results: Results | null, trueCharacter: Letters | null):
 
 export const playResultSound = (isRight: boolean) => {
     const sound = isRight ? additionalAssets.Success : additionalAssets.Failure;
+
     const resultAudio = new Audio(sound);
     resultAudio.play();
 
-    return resultAudio;
+    const stop = () => {
+        resultAudio.pause();
+        resultAudio.currentTime = 0;
+        resultAudio.remove();
+    };
+
+    resultAudio.onended = () => {
+        stop();
+    };
+
+    return stop;
+};
 };
 
 export const playWaitSound = () => {
