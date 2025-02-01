@@ -24,7 +24,7 @@ const Result = () => {
     const [_, setResults] = useState<Results | null>(null);
     const [count, setCount] = useState(0);
 
-    const debug = true;
+    const DEBUG = false;
 
     const imageRef = useRef<HTMLImageElement>(null); // Create ref for ResultImage
 
@@ -64,7 +64,7 @@ const Result = () => {
             try {
                 setLoading(true);
 
-                const response: Results = debug ?
+                const response: Results = DEBUG ?
                     {
                         detectedCharacter: {
                             class: "Alef",
