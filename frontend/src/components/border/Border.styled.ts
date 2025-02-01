@@ -1,25 +1,47 @@
 import styled from "styled-components";
-import StarImage from "../../assets/media/star.png";
 
 export const StarBorderContainer = styled.div`
   position: relative;
-  display: inline-block;
-  max-width: 50%;
-  max-height: 40%;
-
-  @media only screen and (max-width: 870px) {
-    max-width: 85%;
-    max-height: 60%;
-  }
+  width: 75%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const Star = styled.div<{ top: number; left: number }>`
+interface StarProps {
+  top: number;
+  left: number;
+}
+
+export const Star = styled.div<StarProps>`
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url(${StarImage});
-  top: ${(props) => props.top}px;
-  left: ${(props) => props.left}px;
+  width: 25px;
+  height: 25px;
+  top: ${props => props.top}px;
+  left: ${props => props.left}px;
+  transform: translate(-50%, -50%);
+  background-color: gold;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: twinkle 1s infinite alternate;
+
+  @keyframes twinkle {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.5;
+    }
+  }
 `;
