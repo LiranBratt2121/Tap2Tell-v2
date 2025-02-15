@@ -1,7 +1,6 @@
 import json
-import os
-import requests
 import base64
+import os
 from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
 from core.processor import ImageProcessor
@@ -10,7 +9,7 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 
-initialize_app()
+app = initialize_app()
 
 
 # Enable CORS for all origins (development)
@@ -81,7 +80,11 @@ def process_image_function(req: https_fn.Request) -> https_fn.Response:
 
     except Exception as e:
         return https_fn.Response(
+            
             f"Error processing image: {str(e)}",
             status=500,
             headers={},  # No need to manually set CORS headers here
         )
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
