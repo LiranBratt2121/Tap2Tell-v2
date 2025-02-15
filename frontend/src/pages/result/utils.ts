@@ -1,15 +1,24 @@
 import { Letters } from "../../components/letterBox/types.letterBox";
-import { Results } from "../capture/types.capture";
+import { Prediction } from "../capture/types.capture";
 import { additionalAssets } from "../../components/showcaseLetter/utils";
 
-export const isRight = (results: Results | null, trueCharacter: Letters | null): boolean => {
-    if (!results) {
+export const isRight = (results: Prediction[] | null, trueCharacter: Letters | null): boolean => {
+    if (!results || !trueCharacter) {
         return false;
     }
 
-    const top3 = results.top3;
+    const top5 = results.slice(0, 5);
+    const top3 = top5.slice(0, 3);
 
-    return top3.some((curr) => curr.class === trueCharacter);
+    const trueCharPrediction = top5.find((curr) => curr.letter === trueCharacter);
+    if (!trueCharPrediction) {
+        return false;
+    }
+
+    const maxConfidence = Math.max(...top3.map((curr) => curr.confidence));
+    const threshold = 0.2; // The larger the more lean with the detection.
+
+    return top3.some((curr) => curr.letter === trueCharacter && (maxConfidence - curr.confidence) <= threshold);
 }
 
 export const playResultSound = (isRight: boolean) => {
