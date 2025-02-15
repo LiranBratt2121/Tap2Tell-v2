@@ -9,6 +9,7 @@ import GlobalStyle from './globalStyles';
 import Capture from './pages/capture/Capture';
 import Result from './pages/result/Result';
 import ProtectedRoute from './protectedRoute';
+import Guide from './pages/guide/Guide';
 
 startFirebase();
 
@@ -46,6 +47,14 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="guide"
+              element={
+                <ProtectedRoute>
+                  <Guide />
+                </ProtectedRoute>
+              }
+            />            
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
