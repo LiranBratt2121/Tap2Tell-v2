@@ -5,7 +5,7 @@ import { Prediction } from '../pages/capture/types.capture';
 const askModel = async (imageUrl: string) => {
     const config = {
         method: 'post',
-        url: 'https://us-central1-tap2-fc536.cloudfunctions.net/process_image_function',
+        url: 'https://process-image-function-cvoftbjb2q-uc.a.run.app',
         headers: {
             'Content-Type': 'application/json',
         },
