@@ -1,16 +1,6 @@
-import { Prediction } from "../pages/capture/types.capture";
 import axios from 'axios';
+import { Prediction } from '../pages/capture/types.capture';
 
-const getTop3 = (predictions: Prediction[]) => {
-    const top3 = [];
-
-
-    for (let i = 0; i < 2; i++) {
-        top3.push(predictions[i]);
-    }
-
-    return top3;
-}
 
 const askModel = async (imageUrl: string) => {
     const config = {
@@ -25,14 +15,14 @@ const askModel = async (imageUrl: string) => {
     console.log("IMAGE URL: " + imageUrl);
     const result = await axios.request(config).then((res) => res.data);
     console.log(`RESULT:\n ${result}`);
-    const predictions = result["result_b64"]["predictions"];
-    const top3 = getTop3(predictions);
-    const detectedCharacter = top3[0];
+    const predictions = result["result_b64"];
+    const resultsArray: Prediction[] = []
 
-    return {
-        detectedCharacter,
-        top3,
-    };
+    Object.keys(predictions).map((key) => { 
+        resultsArray.push({letter: key, confidence: predictions[key]} as Prediction);
+    });
+
+    return resultsArray;
 };
 
 
