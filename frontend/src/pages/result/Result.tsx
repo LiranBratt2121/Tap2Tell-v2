@@ -1,7 +1,7 @@
 import { memo, useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import askModel from "../../firebase/askModel";
-import { Results } from "../capture/types.capture";
+import { Prediction } from "../capture/types.capture";
 import { Button, ButtonContainer, CounterText, Header, LetterImage, ResultBody, ResultContainer, ResultImage, SeconderyHeader, WaitGif } from "./styles.result";
 import skyConfettiGif from "../../assets/skyconfetti.gif";
 import { isRight, playResultSound, playSuccessBellsSound, playWaitSound } from "./utils";
@@ -21,7 +21,7 @@ const Result = () => {
     const [loading, setLoading] = useState(false);
     const [letterCorrect, isLetterCorrect] = useState(false);
 
-    const [_, setResults] = useState<Results | null>(null);
+    const [_, setResults] = useState<Prediction[] | null>(null);
     const [count, setCount] = useState(0);
 
     const DEBUG = false;
@@ -64,31 +64,16 @@ const Result = () => {
             try {
                 setLoading(true);
 
-                const response: Results = DEBUG ?
-                    {
-                        detectedCharacter: {
-                            class: "Alef",
-                            class_id: "1",
-                            confidence: "0.98",
-                        },
-                        top3: [
-                            {
-                                class: "Alef",
-                                class_id: "1",
-                                confidence: "0.98",
-                            },
-                            {
-                                class: "Bet",
-                                class_id: "2",
-                                confidence: "0.85",
-                            },
-                            {
-                                class: "Gimel",
-                                class_id: "3",
-                                confidence: "0.75",
-                            },
-                        ],
-                    } : await askModel(imgurl);
+                const response: Prediction[] = DEBUG
+                    ?
+                    [
+                        { letter: "Alef", confidence: 0.5325751304626465 },
+                        { letter: "Het", confidence: 0.4005211591720581 },
+                        { letter: "Qof", confidence: 0.055599428713321686 },
+                        { letter: "Bet", confidence: 0.005586538929492235 },
+                        { letter: "Zayin", confidence: 0.0029250329826027155 }
+                    ]
+                    : await askModel(imgurl);
 
                 const isLetterRight = isRight(response, letter)
                 isLetterCorrect(isLetterRight);
@@ -97,7 +82,7 @@ const Result = () => {
                 stopResultSound = playResultSound(isLetterRight);
 
                 setResults(response);
-                console.log(`Results: ${response.top3.map(c => c.class)}`);
+                console.log(`Results: ${response.map(i => `${i.letter}: ${i.confidence}`)}`);
             } catch (e) {
                 console.error("An error occurred with the model: ", e);
                 alert("Try again");
