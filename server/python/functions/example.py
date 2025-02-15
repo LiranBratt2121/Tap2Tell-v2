@@ -2,7 +2,7 @@ import cv2
 from cv2 import imread
 import numpy as np
 from core.ultralytics_model import UltralyticsModel
-from PIL import Image
+from PIL import Image  
 
 def detect_objects(image: np.ndarray):
     model = UltralyticsModel()
