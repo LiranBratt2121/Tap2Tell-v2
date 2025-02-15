@@ -13,7 +13,7 @@ const Login = () => {
         <GoogleButton
           label='הכנס עם גוגל'
           type="dark"
-          onClick={() => signInWithGoogle().then(() => navigate("/dashboard"))}
+          onClick={() => signInWithGoogle().then(() => navigate("/guide"))}
         />
       </FormContainer>
     </LoginContainer>
