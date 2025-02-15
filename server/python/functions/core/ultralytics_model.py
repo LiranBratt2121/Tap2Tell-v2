@@ -9,7 +9,8 @@ class UltralyticsModel:
         self.model = YOLO(path)
 
     def __init__(self):
-        self.load_model(os.path.abspath("core/best.pt"))
+        path = os.path.abspath("functions/core/best.pt")
+        self.load_model(path)
 
     def classify(self, image: np.ndarray) -> dict:
         if not self.model:
