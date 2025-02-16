@@ -9,7 +9,8 @@ class UltralyticsModel:
         self.model = YOLO(path)
 
     def __init__(self):
-        path = os.path.abspath("functions/core/best.pt")
+        path = os.path.join(os.path.dirname(__file__), "best.pt")
+        print(f'{path} is the model path')
         self.load_model(path)
 
     def classify(self, image: np.ndarray) -> dict:
@@ -17,6 +18,13 @@ class UltralyticsModel:
             raise Exception("Model not loaded.")
         
         im = Image.fromarray(image)
-
         results = self.model.predict(im)
+        
+        # Log the results
+        print("Model Results:", results)
+        if results and hasattr(results[0], 'probs'):
+            print("Probs:", results[0].probs)
+            print("Top 5 Indices:", results[0].probs.top5)
+            print("Top 5 Confidences:", results[0].probs.top5conf)
+        
         return results
