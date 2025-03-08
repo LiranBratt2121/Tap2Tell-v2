@@ -12,15 +12,15 @@ export const ResultContainer = styled.div`
     background-size: cover;
     overflow: hidden;
     box-sizing: border-box;
+    padding: 2vh 2vw;
 `;
 
 export const ResultBody = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
+    justify-content: space-between;
     background-color: ${props => props.theme.colors.primary};
-    height: 60vh;
     width: 40vw;
     border-radius: 1.1rem;
     border: solid rgba(0, 0, 0, 0.5);
@@ -28,36 +28,46 @@ export const ResultBody = styled.div`
     margin-bottom: 5vh;
     z-index: 2;
     overflow: hidden;
-    padding-bottom: 3rem;
+    padding: 1.5rem;
     text-wrap: nowrap;
 
     @media only screen and (max-width: 870px) {
-        height: 70vh;
-        width: 80vw;
-        padding-bottom: 0.5rem;
+        width: 85vw;
+        padding: 1rem;
+        margin-bottom: 3vh;
     }
 `;
 
 export const ResultImage = styled.img`
-    max-width: 100%;
-    max-height: 100%;
-    margin-bottom: 0.5rem;
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 40vh;
+    margin: 1rem 0;
     border-radius: 0.2rem;
     display: block;
     z-index: -1;
+    object-fit: contain;
+
+    @media only screen and (max-width: 870px) {
+        max-width: 90%;
+        max-height: 30vh;
+        margin: 0.8rem 0;
+    }
 `;
 
 export const LetterImage = styled.img`
     max-width: 60%;
-    max-height: 40%;
+    max-height: 20vh;
     border-radius: 1rem;
     display: block;
     object-fit: contain;
-    margin: 0.2rem;
+    margin: 0.5rem 0 1rem;
 
     @media only screen and (max-width: 870px) {
-        max-width: 50%;
-        max-height: 40%;
+        max-width: 60%;
+        max-height: 15vh;
+        margin: 0.5rem 0;
     }
 `;
 
@@ -71,15 +81,16 @@ export const WaitGif = styled.img`
 `;
 
 export const Header = styled.h1`
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: bold;
     text-shadow: 0px 1px 0px black;
     color: ${props => props.theme.colors.text};
     text-align: center;
-    margin: 0;
+    margin: 0.5rem 0;
 
     @media only screen and (max-width: 870px) {
-        font-size: 3rem;
+        font-size: 2.8rem;
+        margin-top: 0.5rem;
     }
 `;
 
@@ -89,10 +100,11 @@ export const SeconderyHeader = styled.h1`
     text-shadow: 0px 1px 0px black;
     color: ${props => props.theme.colors.text};
     text-align: center;
-    margin: 0;
+    margin: 0.2rem 0 0.5rem;
 
     @media only screen and (max-width: 870px) {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+        margin: 0.2rem 0;
     }
 `;
 
@@ -115,7 +127,13 @@ export const ButtonContainer = styled.div`
     border: solid rgba(0, 0, 0, 0.5);
     box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.5);
     border-radius: 8px;
-    padding: 2vw;
+    padding: 1.5rem 2.5rem;
+    margin-top: 1rem;
+    
+    @media only screen and (max-width: 870px) {
+        padding: 1rem 2rem;
+        margin-top: 0.5rem;
+    }
 `;
 
 export const Button = styled.div`
