@@ -10,10 +10,14 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 5%;
 `;
 
 export const AnimatedPopup = styled(animated.img)`
-  height: 60%;
-  width: 80%;
+  max-width: 80%;
+  max-height: 80%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   z-index: 10;
 `;
