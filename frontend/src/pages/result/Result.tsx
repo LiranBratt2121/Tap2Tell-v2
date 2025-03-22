@@ -8,6 +8,7 @@ import { isRight, playResultSound, playSuccessBellsSound, playWaitSound } from "
 import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/assetManger";
 import StarBorder from "../../components/border/Border";
+import { updateData as updateLetterDataFirebase } from "../../firebase/lettersLogic";
 
 const Result = () => {
     const navigate = useNavigate();
@@ -75,7 +76,8 @@ const Result = () => {
                     ]
                     : await askModel(imgurl);
 
-                const isLetterRight = isRight(response, letter)
+                const isLetterRight = isRight(response, letter);
+                updateLetterDataFirebase(letter, isLetterRight, imgurl);
                 isLetterCorrect(isLetterRight);
 
                 stopSuccessBellsSound = isLetterRight ? playSuccessBellsSound() : () => { };
