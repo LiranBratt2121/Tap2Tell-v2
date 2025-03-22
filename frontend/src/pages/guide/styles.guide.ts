@@ -29,3 +29,15 @@ export const Header = styled.h1`
     text-align: center;
     transform: translate(-50%, -50%);
 `
+
+export const SkipButton = styled.button`
+    position: absolute;
+    bottom: 2.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.3rem;
+    border-radius: 1rem;
+    font-size: ${props => props.theme.fontSizes.medium};
+    color: ${props => props.theme.colors.text};
+    background-color: ${props => props.theme.colors.primary};
+`
