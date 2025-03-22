@@ -6,7 +6,7 @@ import { Button, ButtonContainer, CounterText, Header, LetterImage, ResultBody, 
 import skyConfettiGif from "../../assets/skyconfetti.gif";
 import { isRight, playResultSound, playSuccessBellsSound, playWaitSound } from "./utils";
 import { Letters } from "../../components/letterBox/types.letterBox";
-import { letterAssets } from "../../components/showcaseLetter/utils";
+import { letterAssets } from "../../components/showcaseLetter/assetManger";
 import StarBorder from "../../components/border/Border";
 
 const Result = () => {

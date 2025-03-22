@@ -1,6 +1,6 @@
 import { Letters } from "../../components/letterBox/types.letterBox";
 import { Prediction } from "../capture/types.capture";
-import { additionalAssets } from "../../components/showcaseLetter/utils";
+import { additionalAssets } from "../../components/showcaseLetter/assetManger";
 
 export const isRight = (results: Prediction[] | null, trueCharacter: Letters | null): boolean => {
     if (!results || !trueCharacter) {

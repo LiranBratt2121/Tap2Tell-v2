@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useSpring } from '@react-spring/web';
 import { ShowcaseProps } from './types.leterBox';
-import { letterAssets } from './utils';
+import { letterAssets } from './assetManger';
 import { AnimatedPopup, Overlay } from './styles.showcaseLetter';
 
 const ShowcaseLetter: React.FC<ShowcaseProps> = ({ letter }) => {

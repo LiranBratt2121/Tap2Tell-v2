@@ -2,7 +2,7 @@ import React from 'react'
 import { Letters } from './types.letterBox'
 import { Image } from './styles.letterBox'
 import { useNavigate } from 'react-router-dom';
-import { letterAssets } from '../showcaseLetter/utils';
+import { letterAssets } from '../showcaseLetter/assetManger';
 
 interface LetterBoxProps {
   letter: Letters;
