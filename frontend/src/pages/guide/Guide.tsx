@@ -4,12 +4,12 @@ import { videoAssets } from '../../components/showcaseLetter/utils'
 
 const Guide = () => {
     const navigate = useNavigate()
-
+    
     return (
         <MainContainer>
             <Header>איך משחקים</Header>
-            <GuideContainer autoPlay={true} onEnded={() => navigate('/dashboard')}>
-                <source src={videoAssets.Guide} type="video/mp4" />
+            <GuideContainer controls playsInline autoPlay={true} onEnded={() => navigate('/dashboard')}>
+                <source src={videoAssets.Guide} type="video/mp4"/>
             </GuideContainer>
         </MainContainer>
     )
