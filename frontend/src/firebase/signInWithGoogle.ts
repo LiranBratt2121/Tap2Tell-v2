@@ -1,19 +1,19 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
 
-const signInWithGoogle = (): Promise<void> => {
+const signInWithGoogle = (): Promise<UserCredential> => {
     const auth = getAuth();
 
     auth.languageCode = 'he';
     const provider = new GoogleAuthProvider();
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<UserCredential>((resolve, reject) => {
         signInWithPopup(auth, provider)
-            .then((_) => {
+            .then((result) => {
                 // const credential = GoogleAuthProvider.credentialFromResult(result);
                 // const token = credential?.accessToken;
                 // const user = result.user;
-                resolve();
-            }).catch((_) => {
+                resolve(result);
+            }).catch((result) => {
                 // Handle Errors here.
                 // const errorCode = error.code;
                 // const errorMessage = error.message;
@@ -22,7 +22,7 @@ const signInWithGoogle = (): Promise<void> => {
                 // The AuthCredential type that was used.
                 // const credential = GoogleAuthProvider.credentialFromError(error);
                 // ...
-                reject();
+                reject(result);
             });
     })
 }
