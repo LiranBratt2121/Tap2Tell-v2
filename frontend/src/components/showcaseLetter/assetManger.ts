@@ -57,6 +57,10 @@ import GuideVideo from "../../assets/video/videoGuide.mp4";
 import Counter from "../../assets/audio/Counter.mp3"
 import SuccessBells from "../../assets/audio/successBells.mp3"
 
+// Images
+import Teacher from "../../assets/media/teacher.png";
+import Student from "../../assets/media/student.png";
+
 import { LetterAssetsProps } from "./types.leterBox";
 
 
@@ -95,3 +99,8 @@ export const additionalAssets = {
 export const videoAssets = {
     Guide: GuideVideo
 };
+
+export const imageAssets = {
+    Teacher: Teacher,
+    Student: Student,
+}
