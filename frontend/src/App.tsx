@@ -11,12 +11,13 @@ import Result from './pages/result/Result';
 import ProtectedRoute from './protectedRoute';
 import Guide from './pages/guide/Guide';
 import useTimeTracker from './hooks/useTimeTracker';
+import Register from './pages/register/Register';
 
 startFirebase();
 
 const App: React.FC = () => {
   useTimeTracker();
-  
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -57,7 +58,14 @@ const App: React.FC = () => {
                   <Guide />
                 </ProtectedRoute>
               }
-            />            
+            />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRoute>
+                  <Register />
+                </ProtectedRoute>}
+            />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
