@@ -10,10 +10,13 @@ import Capture from './pages/capture/Capture';
 import Result from './pages/result/Result';
 import ProtectedRoute from './protectedRoute';
 import Guide from './pages/guide/Guide';
+import useTimeTracker from './hooks/useTimeTracker';
 
 startFirebase();
 
 const App: React.FC = () => {
+  useTimeTracker();
+  
   return (
     <>
       <ThemeProvider theme={theme}>
