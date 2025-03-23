@@ -1,13 +1,9 @@
 import { getAuth } from "firebase/auth";
 import { Letters } from "../components/letterBox/types.letterBox";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { LetterData } from "../pages/adminDashboard/AdminDashboard.types";
 
-type LetterData = {
-    total: number;
-    correct: number;
-    accuracy: number;
-    imageUrlArray: string[];
-};
+
 
 export const updateData = async (letter: Letters, isRight: boolean, currentImgUrl: string) => {
     try {
