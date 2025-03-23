@@ -8,7 +8,7 @@ import {
     Label,
     Value
 } from '../adminDashboard.styles';
-import { UserActivityData, UserInformationData } from '../AdminDashboard.types';
+import { UserActivityData, UserInformationData } from '../adminDashboard.types';
 
 const ProfileCard = (userActivityData: UserActivityData, userInformationData: UserInformationData) => {
     return (

@@ -19,7 +19,7 @@ const Login = () => {
             const additionUserInfo = getAdditionalUserInfo(res);
             const currentRole = await fetchUserInformation().then(data => data?.role);
 
-            if (additionUserInfo?.isNewUser || currentRole === null) {
+            if (additionUserInfo?.isNewUser || currentRole === undefined) {
               navigate("/register");
             } else {
               navigate("/guide");

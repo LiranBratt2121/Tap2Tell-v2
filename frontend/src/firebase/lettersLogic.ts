@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { Letters } from "../components/letterBox/types.letterBox";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { LetterData } from "../pages/adminDashboard/AdminDashboard.types";
+import { LetterData } from "../pages/adminDashboard/adminDashboard.types";
 
 
 

@@ -14,7 +14,7 @@ import {
     TableHeaderCell,
     TableCell
 } from '../adminDashboard.styles';
-import { LettersData } from '../AdminDashboard.types';
+import { LettersData } from '../adminDashboard.types';
 import { calculateOverallAccuracy } from '../utils';
 
 interface PerformanceCardProps {

@@ -60,7 +60,6 @@ const Capture: React.FC = () => {
 
     const handleCapture = async () => {
         const screenshot = cameraRef.current?.takePhoto('base64url') as string;
-
         const url = await uploadToStorage(screenshot);
         const encodedURL = encodeURIComponent(url);
 

@@ -1,4 +1,4 @@
-import { LettersData } from "../adminDashboard/AdminDashboard.types";
+import { LettersData } from "./adminDashboard.types";
 
 export const formatTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);

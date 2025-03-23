@@ -1,6 +1,6 @@
-import { getAuth, User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { UserInformation, UserRole } from "../pages/register/types.register";
+import { UserInformation } from "../pages/register/types.register";
 
 export const fetchUserInformation = async (): Promise<UserInformation | null> => {
     try {
@@ -28,7 +28,10 @@ export const fetchUserInformation = async (): Promise<UserInformation | null> =>
 };
 
 export const updateUserInformation = async (userInfo: UserInformation) => {
-    const { isFirstLogin: isNewUser, role } = userInfo;
+    const { isFirstLogin, role } = userInfo;
+    console.log('User role:', role);
+    console.log('User isFirstLogin:', isFirstLogin);
+    
     try {
         const auth = getAuth()
         const db = getFirestore();
@@ -36,14 +39,14 @@ export const updateUserInformation = async (userInfo: UserInformation) => {
         if (auth.currentUser) {
             const userDoc = doc(db, 'userInformation', auth.currentUser.uid);
 
-            if (role === '' || null) {
+            if (role === '' || role === undefined) {
                 await setDoc(userDoc, {
-                    isNewUser: isNewUser,
+                    isFirstLogin: isFirstLogin,
                 }, { merge: true });
             } else {
                 await setDoc(userDoc, {
                     role: role,
-                    isNewUser: isNewUser,
+                    isFirstLogin: isFirstLogin,
                 }, { merge: true });
             }
         }

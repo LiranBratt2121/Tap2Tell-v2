@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Card,
     CardHeader,
@@ -15,7 +14,7 @@ import {
     TableCell
 } from '../adminDashboard.styles';
 import { calculateAverageTime, formatDate, formatTime } from '../utils';
-import { UserActivityData } from '../AdminDashboard.types';
+import { UserActivityData } from '../adminDashboard.types';
 
 const ActivityCard = (userData: UserActivityData) => {
     // Sort daily times by date (most recent first)

@@ -19,11 +19,11 @@ const Guide = () => {
                 }
 
                 // Show skip button if user is NOT new
-                if (!userInfo.isFirstLogin) {
+                if (userInfo.isFirstLogin) {
                     updateUserInformation({ isFirstLogin: false, role: userInfo.role });
-                    setShowSkip(true);
-                } else {
                     setShowSkip(false);
+                } else {
+                    setShowSkip(true);
                 }
             } catch (error) {
                 console.error("Error fetching user information. ERROR LOG: " + error);
