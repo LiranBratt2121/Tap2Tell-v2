@@ -13,7 +13,7 @@ const Guide = () => {
             try {
                 const userInfo = await fetchUserInformation();
 
-                if (userInfo === null) {
+                if (userInfo === null || userInfo.isFirstLogin) {
                     setShowSkip(false);
                     return;
                 }
