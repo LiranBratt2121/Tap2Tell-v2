@@ -39,16 +39,10 @@ export const updateUserInformation = async (userInfo: UserInformation) => {
         if (auth.currentUser) {
             const userDoc = doc(db, 'userInformation', auth.currentUser.uid);
 
-            if (role === '' || role === undefined) {
-                await setDoc(userDoc, {
-                    isFirstLogin: isFirstLogin,
-                }, { merge: true });
-            } else {
-                await setDoc(userDoc, {
-                    role: role,
-                    isFirstLogin: isFirstLogin,
-                }, { merge: true });
-            }
+            await setDoc(userDoc, {
+                isFirstLogin: isFirstLogin,
+                role: role || "",
+            }, { merge: true });
         }
 
         return true;
