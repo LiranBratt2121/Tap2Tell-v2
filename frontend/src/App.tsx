@@ -12,6 +12,7 @@ import ProtectedRoute from './protectedRoute';
 import Guide from './pages/guide/Guide';
 import useTimeTracker from './hooks/useTimeTracker';
 import Register from './pages/register/Register';
+import ProcessedImage from './pages/processedImage/ProcessedImage';
 
 startFirebase();
 
@@ -64,6 +65,13 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute>
                   <Register />
+                </ProtectedRoute>}
+            />,
+            <Route
+              path="/processedImage"
+              element={
+                <ProtectedRoute>
+                  <ProcessedImage />
                 </ProtectedRoute>}
             />
             <Route path="*" element={<Navigate to="/" />} />
