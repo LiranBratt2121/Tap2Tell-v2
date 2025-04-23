@@ -18,6 +18,13 @@ CORS_HEADERS = {
 }
 
 
+options.set_global_options(
+    region="us-central1",
+    memory=options.MemoryOption.GB_2,
+    cpu=2,
+    timeout_sec=30
+)
+
 @https_fn.on_request(
     cors=options.CorsOptions(
         cors_origins=["*"],  # Allow all origins for development
