@@ -9,6 +9,8 @@ import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/assetManger";
 import StarBorder from "../../components/border/Border";
 import { updateData as updateLetterDataFirebase } from "../../firebase/lettersLogic";
+import { isAdminEmail } from "../adminDashboard/utils";
+import { getAuth } from "firebase/auth";
 
 const Result = () => {
     const navigate = useNavigate();
@@ -22,7 +24,7 @@ const Result = () => {
     const [loading, setLoading] = useState(false);
     const [letterCorrect, isLetterCorrect] = useState(false);
 
-    const [_, setResults] = useState<Prediction[] | null>(null);
+    const [results, setResults] = useState<Prediction[] | null>(null);
     const [count, setCount] = useState(0);
 
     const DEBUG = false;
@@ -75,7 +77,6 @@ const Result = () => {
                         { letter: "Zayin", confidence: 0.0029250329826027155 }
                     ]
                     : await askModel(imgurl);
-
                 const isLetterRight = isRight(response, letter);
                 updateLetterDataFirebase(letter, isLetterRight, imgurl);
                 isLetterCorrect(isLetterRight);
@@ -104,6 +105,22 @@ const Result = () => {
         };
     }, [imgurl, navigate]);
 
+    const navigateToProcessedImage = () => {
+        if (imgurl && results) {
+            try {
+                const encodedImgUrl = encodeURIComponent(imgurl);
+                // Stringify the results array to JSON, then encode
+                const encodedResults = encodeURIComponent(JSON.stringify(results));
+                navigate(`/processedImage?imgurl=${encodedImgUrl}&modelresults=${encodedResults}`);
+            } catch (error) {
+                console.error("Error encoding data for navigation:", error);
+                alert("Could not prepare data for the next page.");
+            }
+        } else {
+            alert("Image URL or model results are not available yet.");
+        }
+    };
+
     if (loading) {
         return (
             <>
@@ -122,6 +139,11 @@ const Result = () => {
                 <StarBorder won={letterCorrect}><ResultImage ref={imageRef} src={imgurl} /></StarBorder>
             </ResultBody>
 
+            {isAdminEmail(getAuth().currentUser?.email || "") && (
+                <ButtonContainer>
+                    <Button onClick={navigateToProcessedImage}>ראה תמונה מעובדת</Button>
+                </ButtonContainer>
+            )}
             <ButtonContainer>
                 <Button onClick={() => navigate("/dashboard")}>חזור</Button>
             </ButtonContainer>
