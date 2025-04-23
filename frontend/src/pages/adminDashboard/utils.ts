@@ -51,3 +51,9 @@ export const calculateOverallAccuracy = (lettersData: LettersData) => {
 
   return Math.round((totalCorrect / totalAttempts) * 100);
 };
+
+export const adminEmails = ["avivajac@gmail.com", "taps2tell@gmail.com", "brattlirannin@gmail.com"]
+
+export const isAdminEmail = (email: string) => {
+  return adminEmails.includes(email);
+};
