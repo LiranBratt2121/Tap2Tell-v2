@@ -2,6 +2,7 @@ import os
 import sys
 import cv2
 
+# Remeber to add relative path to core to make code work.
 script_path = os.path.abspath(__file__)
 script_dir = os.path.dirname(script_path)
 parent_dir = os.path.dirname(script_dir)
