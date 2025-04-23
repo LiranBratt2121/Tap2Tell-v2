@@ -1,6 +1,7 @@
 import { Letters } from "../../components/letterBox/types.letterBox";
 import { Prediction } from "../capture/types.capture";
 import { additionalAssets } from "../../components/showcaseLetter/assetManger";
+import { similarHebrewLetters } from "../processedImage/utils";
 
 export const isRight = (results: Prediction[] | null, trueCharacter: Letters | null): boolean => {
     if (!results || !trueCharacter) {
@@ -9,17 +10,32 @@ export const isRight = (results: Prediction[] | null, trueCharacter: Letters | n
 
     const top5 = results.slice(0, 5);
     const top3 = top5.slice(0, 3);
+    const threshold = 0.2;
 
-    const trueCharPrediction = top5.find((curr) => curr.letter === trueCharacter);
-    if (!trueCharPrediction) {
-        return false;
-    }
+    const similarLetters = new Set([
+        trueCharacter,
+        ...(similarHebrewLetters[trueCharacter] || []),
+    ]);
 
     const maxConfidence = Math.max(...top3.map((curr) => curr.confidence));
-    const threshold = 0.2; // The larger the more lean with the detection.
 
-    return top3.some((curr) => curr.letter === trueCharacter && (maxConfidence - curr.confidence) <= threshold);
-}
+    // Prioritize similar-looking letters in the top 3 (including exact match)
+    const top3HasSimilar = top3.some(
+        (curr) =>
+            similarLetters.has(curr.letter) &&
+            (maxConfidence - curr.confidence) <= threshold
+    );
+
+    if (top3HasSimilar) {
+        return true;
+    }
+
+    // If not in top3, still allow if exact letter appears anywhere in top 5
+    const top5HasExact = top5.some((curr) => curr.letter === trueCharacter);
+
+    return top5HasExact;
+};
+
 
 export const playResultSound = (isRight: boolean) => {
     const sound = isRight ? additionalAssets.Success : additionalAssets.Failure;
