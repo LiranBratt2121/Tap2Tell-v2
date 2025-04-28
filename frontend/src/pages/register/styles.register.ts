@@ -39,6 +39,16 @@ export const Header = styled.h1`
   text-align: center;
   margin-bottom: 5px;
 `;
+
+export const Text = styled.h1`
+  margin: -1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-shadow: 0px 1px 0px black;
+  color: ${props => props.theme.colors.text};
+  text-align: center;
+`;
+
 export const RadioImage = styled.img`
   width: 5rem;
   height: 5rem;
