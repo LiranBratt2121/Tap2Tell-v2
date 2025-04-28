@@ -4,10 +4,11 @@ import signInWithGoogle from '../../firebase/signInWithGoogle';
 import { useNavigate } from 'react-router-dom';
 import { getAdditionalUserInfo } from 'firebase/auth';
 import { fetchUserInformation } from '../../firebase/UserInformation';
+import { warmUpServer } from '../../firebase/warmupFirebase';
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
   return (
     <LoginContainer>
       <FormContainer>
@@ -15,16 +16,19 @@ const Login = () => {
         <GoogleButton
           label='הכנס עם גוגל'
           type="dark"
-          onClick={() => signInWithGoogle().then(async (res) => {
-            const additionUserInfo = getAdditionalUserInfo(res);
-            const currentRole = await fetchUserInformation().then(data => data?.role);
+          onClick={() => signInWithGoogle()
+            .then(async (res) => {
+              const additionUserInfo = getAdditionalUserInfo(res);
+              const currentRole = await fetchUserInformation().then(data => data?.role);
 
-            if (additionUserInfo?.isNewUser || currentRole === undefined) {
-              navigate("/register");
-            } else {
-              navigate("/guide");
-            }
-          })}
+              if (additionUserInfo?.isNewUser || currentRole === undefined || currentRole === null) {
+                navigate("/register");
+              } else {
+                navigate("/guide");
+              }
+            })
+            .then(warmUpServer)
+          }
         />
       </FormContainer>
     </LoginContainer>
