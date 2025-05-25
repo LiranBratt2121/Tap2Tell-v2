@@ -7,15 +7,34 @@ import { Back, Button, CameraContainer, CameraView } from './styles.capture';
 import uploadToStorage from '../../firebase/uploadToStorage';
 import ShowcaseLetter from '../../components/showcaseLetter/ShowcaseLetter';
 import { Letters } from '../../components/letterBox/types.letterBox';
+import { cameraErrorMessages } from './types.capture';
 
 const Capture: React.FC = () => {
     const { letter } = useParams();
     const [aspectRatio, setAspectRatio] = useState<number>(16 / 9);
     const [errors, setErrors] = useState(false);
+    const [isCameraReady, setCameraReady] = useState(false);
 
     const navigate = useNavigate();
 
     const cameraRef = useRef<CameraType>(null);
+
+    useEffect(() => {
+        if (errors) {
+            console.error("Errors happend during the screen capture period. returning to homepage.");
+            navigate("/dashboard");
+        }
+    }, [errors, navigate]);
+
+    useEffect(() => {
+        const delayCameraLoad = () => {
+            const timeout = setTimeout(() => setCameraReady(true), 300);
+            return timeout
+        }
+
+        const timeout = delayCameraLoad();
+        return () => clearTimeout(timeout);
+    }, []);
 
     useEffect(() => {
         const updateAspectRatio = () => {
@@ -50,7 +69,7 @@ const Capture: React.FC = () => {
     }, [letter, navigate]);
 
     if (errors) {
-        return null;
+        return <div>Redirecting...</div>;
     }
 
     const videoConstraints: Omit<CameraProps, "errorMessages"> = {
@@ -59,28 +78,45 @@ const Capture: React.FC = () => {
     };
 
     const handleCapture = async () => {
-        const screenshot = cameraRef.current?.takePhoto('base64url') as string;
-        const url = await uploadToStorage(screenshot);
-        const encodedURL = encodeURIComponent(url);
+        if (!cameraRef.current) {
+            console.warn("The camera is not ready yet...");
+            alert("המצלמה לא מוכנה. כנסו שוב ותצלמו רק כשהמצלמה מופיעה")
+            return;
+        }
 
-        navigate(`/result?imgurl=${encodedURL}&letter=${letter}`);
+        try {
+            const screenshot = cameraRef.current?.takePhoto('base64url') as string | null;
+
+            if (!screenshot) {
+                throw new Error("Screenshot capture failed");
+            }
+
+            const url = await uploadToStorage(screenshot);
+            const encodedURL = encodeURIComponent(url);
+
+            navigate(`/result?imgurl=${encodedURL}&letter=${letter}`);
+        } catch (error) {
+            console.error("Error during capture:", error);
+            alert("המצלמה לא מוכנה. כנסו שוב ותצלמו רק כשהמצלמה מופיעה")
+            setErrors(true)
+        }
     };
 
 
     return (
         <CameraContainer>
             <CameraView>
-                <Camera
+                {isCameraReady && <Camera
                     ref={cameraRef}
                     aspectRatio={videoConstraints.aspectRatio}
-                    facingMode={videoConstraints.facingMode}
-                    errorMessages={{}}
-                />
+                    facingMode={videoConstraints.facingMode} 
+                    errorMessages={cameraErrorMessages}
+                    />}
 
                 <Back
                     onClick={() => navigate("/dashboard")}
                 >
-                    <IoMdReturnLeft size={35}/>
+                    <IoMdReturnLeft size={35} />
                 </Back>
 
                 <Button
