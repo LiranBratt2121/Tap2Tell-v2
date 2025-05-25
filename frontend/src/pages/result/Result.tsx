@@ -58,9 +58,9 @@ const Result = () => {
             return;
         }
 
-        let stopWaitSound: () => void;
-        let stopResultSound: () => void;
-        let stopSuccessBellsSound: () => void;
+        let stopWaitSound: () => void = () => { };
+        let stopResultSound: () => void = () => { };
+        let stopSuccessBellsSound: () => void = () => { };
 
         const sendToApi = async () => {
             stopWaitSound = playWaitSound();
