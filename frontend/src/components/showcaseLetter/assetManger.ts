@@ -51,7 +51,7 @@ import SuccessAudio from "../../assets/audio/Success.mp3";
 import FailureAudio from "../../assets/audio/faliure.mp3";
 
 // Video
-import GuideVideo from "../../assets/video/videoGuide.mp4";
+import GuideVideo from "../../assets/video/guide.mp4";
 
 // Other
 import Counter from "../../assets/audio/Counter.mp3"
