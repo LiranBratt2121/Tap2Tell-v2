@@ -9,7 +9,7 @@ import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/assetManger";
 import StarBorder from "../../components/border/Border";
 import { updateData as updateLetterDataFirebase } from "../../firebase/lettersLogic";
-import { isAdminEmail } from "../adminDashboard/utils";
+import { isAdminEmail } from "../adminDashboard/depricated/utils";
 import { getAuth } from "firebase/auth";
 
 const Result = () => {

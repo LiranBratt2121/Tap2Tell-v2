@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { Letters } from "../components/letterBox/types.letterBox";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { LetterData } from "../pages/adminDashboard/adminDashboard.types";
+import { LetterData } from "../pages/adminDashboard/depricated/adminDashboard.types";
 
 
 
@@ -26,7 +26,7 @@ export const updateData = async (letter: Letters, isRight: boolean, currentImgUr
             const accuracy = (correct / total) * 100;
 
             let imageUrlArray = letterData.imageUrlArray.length !== 1 // If the total is 1, the array only have the current image url.
-                ? [...letterData.imageUrlArray, currentImgUrl]
+                ? [...letterData.imageUrlArray, currentImgUrl] // TODO: CHECK IF LOGIC IS REMOVING IMAGES
                 : letterData.imageUrlArray;
 
             // Limit the array length to 5000 to combat the 1mb limit of a doc in firestore.

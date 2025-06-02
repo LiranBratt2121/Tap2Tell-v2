@@ -1,5 +1,5 @@
-import { Letters } from "../../components/letterBox/types.letterBox";
-import { UserInformation } from "../register/types.register";
+import { Letters } from "../../../components/letterBox/types.letterBox";
+import { UserInformation } from "../../register/types.register";
 
 interface UserActivityData {
     createdAt: string;
