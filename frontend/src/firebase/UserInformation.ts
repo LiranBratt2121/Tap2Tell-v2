@@ -27,7 +27,24 @@ export const fetchUserInformation = async (): Promise<UserInformation | null> =>
     return null;
 };
 
-export const updateUserInformation = async (userInfo: UserInformation) => {
+export const fetchCollection = async (col: string) => {
+    try {
+        const db = getFirestore();
+        const auth = getAuth();
+
+        if (auth.currentUser) {
+            const collectionRef = collection(db, col);
+            const querySnapshot = await getDocs(collectionRef);
+            return querySnapshot;
+        }
+
+        return null
+    } catch(error) {
+        console.error('Error writing document: ', error);
+        return null;
+    }
+};
+
     const { isFirstLogin, role } = userInfo;
     console.log('User role:', role);
     console.log('User isFirstLogin:', isFirstLogin);
