@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { getFirestore, doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { FirebaseUserActivity } from '../firebase/interfaces';
 
 /**
  * A hook that tracks active time on the app and saves it to Firestore
@@ -65,7 +66,7 @@ const useTimeTracker = () => {
           dailyTimes,
           lastUpdated: new Date(),
           createdAt: new Date()
-        });
+        } as FirebaseUserActivity);
         
         setTotalTime(timeInSeconds);
         setTodayTime(timeInSeconds);

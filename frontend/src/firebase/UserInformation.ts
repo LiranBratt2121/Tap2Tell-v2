@@ -1,8 +1,8 @@
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { UserInformation } from "../pages/register/types.register";
+import { collection, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
+import { FirebaseUserInformation } from "./interfaces";
 
-export const fetchUserInformation = async (): Promise<UserInformation | null> => {
+export const fetchFirebaseUserInformation = async (): Promise<FirebaseUserInformation | null> => {
     try {
         const auth = getAuth();
         const db = getFirestore();
@@ -14,7 +14,7 @@ export const fetchUserInformation = async (): Promise<UserInformation | null> =>
             if (docSnap.exists()) {
                 const userData = docSnap.data();
                 console.log('User role:', userData.role);
-                return userData as UserInformation;
+                return userData as FirebaseUserInformation;
             } else {
                 console.log('No such document!');
                 return null;
@@ -45,6 +45,7 @@ export const fetchCollection = async (col: string) => {
     }
 };
 
+export const updateFirebaseUserInformation = async (userInfo: FirebaseUserInformation) => {
     const { isFirstLogin, role } = userInfo;
     console.log('User role:', role);
     console.log('User isFirstLogin:', isFirstLogin);
@@ -54,7 +55,7 @@ export const fetchCollection = async (col: string) => {
         const db = getFirestore();
 
         if (auth.currentUser) {
-            const userDoc = doc(db, 'userInformation', auth.currentUser.uid);
+            const userDoc = doc(db, 'FirebaseUserInformation', auth.currentUser.uid);
 
             await setDoc(userDoc, {
                 isFirstLogin: isFirstLogin,
@@ -67,4 +68,4 @@ export const fetchCollection = async (col: string) => {
         console.error('Error writing document: ', error);
         return false;
     }
-}
+};

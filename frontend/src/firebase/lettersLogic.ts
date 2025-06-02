@@ -2,6 +2,7 @@ import { getAuth } from "firebase/auth";
 import { Letters } from "../components/letterBox/types.letterBox";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { LetterData } from "../pages/adminDashboard/depricated/adminDashboard.types";
+import { FirebaseLetters } from "./interfaces";
 
 
 
@@ -41,7 +42,7 @@ export const updateData = async (letter: Letters, isRight: boolean, currentImgUr
                     correct: correct,
                     accuracy: accuracy,
                     imageUrlArray: imageUrlArray
-                }
+                } as Partial<FirebaseLetters>
             }, { merge: true });
         }
     } catch (error) {

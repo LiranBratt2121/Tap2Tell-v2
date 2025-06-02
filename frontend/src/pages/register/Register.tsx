@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, FormContainer, Header, RadioContainer, RadioImage, RegisterContainer, Title, Text } from './styles.register';
 import { imageAssets } from '../../components/showcaseLetter/assetManger';
-import { updateUserInformation } from '../../firebase/UserInformation';
+import { updateFirebaseUserInformation } from '../../firebase/FirebaseUserInformation';
 import { UserRole } from './types.register';
 
 const roles: { type: UserRole, label: string, image: string }[] = [
@@ -24,7 +24,7 @@ const Register = () => {
             return;
         }
 
-        const success = await updateUserInformation({ isFirstLogin: true, role: selectedRole });
+        const success = await updateFirebaseUserInformation({ isFirstLogin: true, role: selectedRole });
 
         if (success) {
             navigate('/guide');

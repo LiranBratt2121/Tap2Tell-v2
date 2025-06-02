@@ -3,8 +3,8 @@ import GoogleButton from 'react-google-button';
 import signInWithGoogle from '../../firebase/signInWithGoogle';
 import { useNavigate } from 'react-router-dom';
 import { getAdditionalUserInfo } from 'firebase/auth';
-import { fetchUserInformation } from '../../firebase/UserInformation';
 import { warmUpServer } from '../../firebase/warmupFirebase';
+import { fetchFirebaseUserInformation } from '../../firebase/UserInformation';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Login = () => {
           onClick={() => signInWithGoogle()
             .then(async (res) => {
               const additionUserInfo = getAdditionalUserInfo(res);
-              const currentRole = await fetchUserInformation().then(data => data?.role);
+              const currentRole = await fetchFirebaseUserInformation().then(data => data?.role);
 
               if (additionUserInfo?.isNewUser || currentRole === undefined || currentRole === null) {
                 navigate("/register");

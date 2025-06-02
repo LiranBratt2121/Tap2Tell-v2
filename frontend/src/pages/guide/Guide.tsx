@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { GuideContainer, Header, MainContainer, SkipButton } from './styles.guide'
 import { videoAssets } from '../../components/showcaseLetter/assetManger'
-import { fetchUserInformation, updateUserInformation } from '../../firebase/UserInformation'
+import { fetchFirebaseUserInformation, updateFirebaseUserInformation } from '../../firebase/UserInformation'
 
 const Guide = () => {
     const navigate = useNavigate()
@@ -11,7 +11,7 @@ const Guide = () => {
     useEffect(() => {
         const checkUserStatus = async () => {
             try {
-                const userInfo = await fetchUserInformation();
+                const userInfo = await fetchFirebaseUserInformation();
 
                 if (userInfo === null) {
                     setShowSkip(false);
@@ -20,7 +20,7 @@ const Guide = () => {
 
                 // Show skip button if user is NOT new
                 if (userInfo.isFirstLogin) {
-                    updateUserInformation({ isFirstLogin: false, role: userInfo.role });
+                    updateFirebaseUserInformation({ isFirstLogin: false, role: userInfo.role });
                     setShowSkip(false);
                 } else {
                     setShowSkip(true);
