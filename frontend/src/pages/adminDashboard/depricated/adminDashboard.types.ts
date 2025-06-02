@@ -1,5 +1,5 @@
 import { Letters } from "../../../components/letterBox/types.letterBox";
-import { UserInformation } from "../../register/types.register";
+import { FirebaseUserInformation } from "../../register/types.register";
 
 interface UserActivityData {
     createdAt: string;
@@ -22,6 +22,6 @@ type LettersData = {
     [K in Letters]: LetterData;
 };
 
-type UserInformationData = UserInformation;
+type FirebaseUserInformationData = FirebaseUserInformation;
 
-export type { UserActivityData, LetterData, LettersData, UserInformationData };
+export type { UserActivityData, LetterData, LettersData, FirebaseUserInformationData };

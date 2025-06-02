@@ -8,9 +8,9 @@ import {
     Label,
     Value
 } from '../adminDashboard.styles';
-import { UserActivityData, UserInformationData } from '../adminDashboard.types';
+import { UserActivityData, FirebaseUserInformationData } from '../adminDashboard.types';
 
-const ProfileCard = (userActivityData: UserActivityData, userInformationData: UserInformationData) => {
+const ProfileCard = (userActivityData: UserActivityData, FirebaseUserInformationData: FirebaseUserInformationData) => {
     return (
         <Card>
             <CardHeader>
@@ -24,11 +24,11 @@ const ProfileCard = (userActivityData: UserActivityData, userInformationData: Us
                     </DataItem>
                     <DataItem>
                         <Label>Role</Label>
-                        <Value style={{ textTransform: 'capitalize' }}>{userInformationData.role}</Value>
+                        <Value style={{ textTransform: 'capitalize' }}>{FirebaseUserInformationData.role}</Value>
                     </DataItem>
                     <DataItem>
                         <Label>First Login</Label>
-                        <Value>{userInformationData.isFirstLogin ? "Yes" : "No"}</Value>
+                        <Value>{FirebaseUserInformationData.isFirstLogin ? "Yes" : "No"}</Value>
                     </DataItem>
                     <DataItem>
                         <Label>Active Since</Label>
