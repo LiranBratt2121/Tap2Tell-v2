@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react'
-import { DashboardContainer, Header, LettersContainer } from './styles.dashboard'
+import { Container, DashboardContainer, Header, LettersContainer } from './styles.dashboard'
 import { letters } from './utils'
 import LetterBox from '../../components/letterBox/LetterBox'
-import { fetchCollection } from '../../firebase/UserInformation'
+import { AdminDashboardManager } from '../adminDashboard/manager'
+import { isAdminMailConnected } from '../../firebase/isAdminMail'
+import { Button } from "../../pages/register/styles.register"
+import { useNavigate } from 'react-router-dom'
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchCollection("letters").then(res => res?.forEach((doc) => {
-      const id = doc.id;
-      const data = doc.data()
-      console.log(`${id} => ${JSON.stringify(data)}`)
-    }));
-  }, []); 
+    AdminDashboardManager.getInstance().initialize()
+  }, []);
 
   return (
-    <DashboardContainer>
-      <LettersContainer>
-        <Header>בחרו אות</Header>
-        {letters.map((l) => <LetterBox letter={l} key={l} />)}
-      </LettersContainer>
-    </DashboardContainer>
+    <Container>
+      <DashboardContainer>
+        <LettersContainer>
+          <Header>בחרו אות</Header>
+          {letters.map((l) => <LetterBox letter={l} key={l} />)}
+        </LettersContainer>
+      </DashboardContainer>
+      {isAdminMailConnected() && <Button onClick={() => navigate("/adminDashboard")}>דאשבורד למנהלים</Button>}
+    </Container>
   );
 }
 
