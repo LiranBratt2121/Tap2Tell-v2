@@ -1,5 +1,5 @@
 import { Letters } from "../../../components/letterBox/types.letterBox";
-import { FirebaseUserInformation } from "../../register/types.register";
+import { FirebaseUserInformation } from "../../../firebase/interfaces";
 
 interface UserActivityData {
     createdAt: string;
