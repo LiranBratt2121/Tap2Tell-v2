@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, FormContainer, Header, RadioContainer, RadioImage, RegisterContainer, Title, Text } from './styles.register';
 import { imageAssets } from '../../components/showcaseLetter/assetManger';
-import { updateFirebaseUserInformation } from '../../firebase/FirebaseUserInformation';
-import { UserRole } from './types.register';
+import { UserRole } from '../../firebase/interfaces';
+import { updateFirebaseUserInformation } from '../../firebase/UserInformation';
 
 const roles: { type: UserRole, label: string, image: string }[] = [
     { type: 'student', label: 'תלמיד', image: imageAssets.Student },

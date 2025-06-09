@@ -9,8 +9,7 @@ import { Letters } from "../../components/letterBox/types.letterBox";
 import { letterAssets } from "../../components/showcaseLetter/assetManger";
 import StarBorder from "../../components/border/Border";
 import { updateData as updateLetterDataFirebase } from "../../firebase/lettersLogic";
-import { isAdminEmail } from "../adminDashboard/depricated/utils";
-import { getAuth } from "firebase/auth";
+import { isAdminMailConnected } from "../../firebase/isAdminMail";
 
 const Result = () => {
     const navigate = useNavigate();
@@ -139,7 +138,7 @@ const Result = () => {
                 <StarBorder won={letterCorrect}><ResultImage ref={imageRef} src={imgurl} /></StarBorder>
             </ResultBody>
 
-            {isAdminEmail(getAuth().currentUser?.email || "") && (
+            {isAdminMailConnected() && (
                 <ButtonContainer>
                     <Button onClick={navigateToProcessedImage}>ראה תמונה מעובדת</Button>
                 </ButtonContainer>
