@@ -13,6 +13,8 @@ import Guide from './pages/guide/Guide';
 import useTimeTracker from './hooks/useTimeTracker';
 import Register from './pages/register/Register';
 import ProcessedImage from './pages/processedImage/ProcessedImage';
+import AdminDashboard from './pages/adminDashboard/AdminDashboard';
+import ProtectedAdminRoute from './protectedAdminRoute';
 
 startFirebase();
 
@@ -73,6 +75,14 @@ const App: React.FC = () => {
                 <ProtectedRoute>
                   <ProcessedImage />
                 </ProtectedRoute>}
+            />
+            <Route
+              path="/adminDashboard"
+              element={
+                <ProtectedAdminRoute>
+                  <AdminDashboard />
+                </ProtectedAdminRoute>
+              }
             />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
