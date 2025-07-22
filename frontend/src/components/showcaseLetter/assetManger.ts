@@ -61,6 +61,9 @@ import SuccessBells from "../../assets/audio/successBells.mp3"
 import Teacher from "../../assets/media/teacher.png";
 import Student from "../../assets/media/student.png";
 
+import Hebrew from "../../assets/media/hebrew.png";
+import English from "../../assets/media/english.png";
+
 import { LetterAssetsProps } from "./types.leterBox";
 
 
@@ -101,6 +104,8 @@ export const videoAssets = {
 };
 
 export const imageAssets = {
-    Teacher: Teacher,
-    Student: Student,
+    Teacher,
+    Student,
+    Hebrew,
+    English
 }
