@@ -39,7 +39,7 @@ export const fetchCollection = async (col: string) => {
         }
 
         return null
-    } catch(error) {
+    } catch (error) {
         console.error('Error writing document: ', error);
         return null;
     }
@@ -49,18 +49,19 @@ export const updateFirebaseUserInformation = async (userInfo: FirebaseUserInform
     const { isFirstLogin, role } = userInfo;
     console.log('User role:', role);
     console.log('User isFirstLogin:', isFirstLogin);
-    
+
     try {
         const auth = getAuth()
         const db = getFirestore();
 
         if (auth.currentUser) {
-            const userDoc = doc(db, 'FirebaseUserInformation', auth.currentUser.uid);
+            const userDoc = doc(db, 'userInformation', auth.currentUser.uid);
 
             await setDoc(userDoc, {
                 isFirstLogin: isFirstLogin,
                 role: role || "",
-            }, { merge: true });
+                desiredDisplayLanguage: userInfo.desiredDisplayLanguage || ""
+            } as FirebaseUserInformation, { merge: true });
         }
 
         return true;
