@@ -38,6 +38,7 @@ export const Header = styled.h1`
   color: ${props => props.theme.colors.text};
   text-align: center;
   margin-bottom: 5px;
+  margin-top: 2rem;
 `;
 
 export const Text = styled.h1`
