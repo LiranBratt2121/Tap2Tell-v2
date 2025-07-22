@@ -19,9 +19,12 @@ const Login = () => {
           onClick={() => signInWithGoogle()
             .then(async (res) => {
               const additionUserInfo = getAdditionalUserInfo(res);
-              const currentRole = await fetchFirebaseUserInformation().then(data => data?.role);
+              const userInfo = await fetchFirebaseUserInformation().then(data => data);
 
-              if (additionUserInfo?.isNewUser || currentRole === undefined || currentRole === null) {
+              const currentRole = userInfo?.role;
+              const desiredDisplayLanguage = userInfo?.desiredDisplayLanguage;
+
+              if (additionUserInfo?.isNewUser || !currentRole || !desiredDisplayLanguage) {
                 navigate("/register");
               } else {
                 navigate("/guide");

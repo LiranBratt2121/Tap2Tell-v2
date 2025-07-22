@@ -20,7 +20,7 @@ const Guide = () => {
 
                 // Show skip button if user is NOT new
                 if (userInfo.isFirstLogin) {
-                    updateFirebaseUserInformation({ isFirstLogin: false, role: userInfo.role });
+                    updateFirebaseUserInformation({ isFirstLogin: false, role: userInfo.role, desiredDisplayLanguage: userInfo.desiredDisplayLanguage ?? "he" });
                     setShowSkip(false);
                 } else {
                     setShowSkip(true);
