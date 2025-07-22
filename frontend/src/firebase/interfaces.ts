@@ -20,8 +20,10 @@ export type FirebaseUserActivity = {
 };
 
 export type UserRole = "student" | "teacher" | "";
+export type UserDisplayLanguage = "he" | "en" | "";
 
 export type FirebaseUserInformation = {
     role: UserRole;
     isFirstLogin: boolean;
+    desiredDisplayLanguage: UserDisplayLanguage;
 };
