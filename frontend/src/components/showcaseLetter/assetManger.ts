@@ -45,13 +45,19 @@ import QofAudio from "../../assets/audio/Qof.mp3";
 import ReshAudio from "../../assets/audio/Resh.mp3";
 import ShinAudio from "../../assets/audio/Shin.mp3";
 import TavAudio from "../../assets/audio/Tav.mp3";
+import CurrentEnglishAudio from "../../assets/audio/currentLetterEnglish.mp3";
+
 
 // Additional audio for success and failure
 import SuccessAudio from "../../assets/audio/Success.mp3";
 import FailureAudio from "../../assets/audio/faliure.mp3";
 
+import SuccessEnglish from "../../assets/audio/successEnglish.mp3";
+import FailureEnglish from "../../assets/audio/failureEnglish.mp3";
+
 // Video
 import GuideVideo from "../../assets/video/guide.mp4";
+import GuideVideoEnglish from "../../assets/video/guideEnglish.mp4";
 
 // Other
 import Counter from "../../assets/audio/Counter.mp3"
@@ -95,12 +101,17 @@ export const letterAssets: LetterAssetsProps = {
 export const additionalAssets = {
     Success: SuccessAudio,
     Failure: FailureAudio,
+    SuccessEnglish: SuccessEnglish,
+    FailureEnglish: FailureEnglish,
+    CurrentEnglishAudio: CurrentEnglishAudio,
+
     Counter: Counter,
     SuccessBells: SuccessBells
 };
 
 export const videoAssets = {
-    Guide: GuideVideo
+    Guide: GuideVideo,
+    GuideEnglish: GuideVideoEnglish
 };
 
 export const imageAssets = {
