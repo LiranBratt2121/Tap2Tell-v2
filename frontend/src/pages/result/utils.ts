@@ -2,6 +2,7 @@ import { Letters } from "../../components/letterBox/types.letterBox";
 import { Prediction } from "../capture/types.capture";
 import { additionalAssets } from "../../components/showcaseLetter/assetManger";
 import { similarHebrewLetters } from "../processedImage/utils";
+import i18n from 'i18next';
 
 export const isRight = (results: Prediction[] | null, trueCharacter: Letters | null): boolean => {
     if (!results || !trueCharacter) {
@@ -38,7 +39,23 @@ export const isRight = (results: Prediction[] | null, trueCharacter: Letters | n
 
 
 export const playResultSound = (isRight: boolean) => {
-    const sound = isRight ? additionalAssets.Success : additionalAssets.Failure;
+    const lng = i18n.language;
+
+    const _additionalAssets = lng === 'he' ? {
+        Success: additionalAssets.Success,
+        Failure: additionalAssets.Failure,
+        SuccessBells: additionalAssets.SuccessBells,
+        Counter: additionalAssets.Counter,
+    } : lng == 'en' ? {
+        Success: additionalAssets.SuccessEnglish,
+        Failure: additionalAssets.FailureEnglish,
+        SuccessBells: additionalAssets.SuccessBells,
+        Counter: additionalAssets.Counter,
+    } : {
+        ...additionalAssets // Default to Hebrew if no match
+    };
+
+    const sound = isRight ? _additionalAssets.Success : _additionalAssets.Failure;
 
     const resultAudio = new Audio(sound);
     resultAudio.play();
