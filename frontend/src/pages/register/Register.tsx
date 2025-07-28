@@ -5,6 +5,8 @@ import { imageAssets } from '../../components/showcaseLetter/assetManger';
 import { UserDisplayLanguage, UserRole } from '../../firebase/interfaces';
 import { updateFirebaseUserInformation } from '../../firebase/UserInformation';
 import { SelectionGroup } from './component/SelectionGroup';
+import { useTranslation } from 'react-i18next';
+import setTaps2tellLanguage from '../../i18n/setLanguage';
 
 const roles: { type: UserRole, label: string, image: string }[] = [
     { type: 'student', label: 'תלמיד', image: imageAssets.Student },
@@ -19,8 +21,9 @@ const languages: { type: UserDisplayLanguage, label: string, image: string }[] =
 const Register = () => {
     const [selectedRole, setSelectedRole] = useState<UserRole>('');
     const [selectedLang, setSelectedLang] = useState<UserDisplayLanguage>('');
-    const navigate = useNavigate();
+    const { i18n } = useTranslation();
 
+    const navigate = useNavigate();
     const handleContinue = async () => {
         if (!selectedRole) {
             alert('בחר סוג משתמש');
@@ -39,6 +42,7 @@ const Register = () => {
         });
 
         if (success) {
+            setTaps2tellLanguage(i18n);
             navigate('/guide');
         } else {
             alert('הייתה בעיה בהרשמה, נסה שוב');
@@ -52,14 +56,14 @@ const Register = () => {
                 <Title>ברוך הבא</Title>
 
                 <SelectionGroup
-                    title="סוג משתמש"
+                    title="Account type / סוג משתמש"
                     options={roles}
                     selected={selectedRole}
                     onSelect={setSelectedRole}
                 />
 
                 <SelectionGroup
-                    title="שפת תצוגה מועדפת"
+                    title="Preffered language / שפת תצוגה מועדפת"
                     options={languages}
                     selected={selectedLang}
                     onSelect={setSelectedLang}

@@ -6,23 +6,30 @@ import { AdminDashboardManager } from '../adminDashboard/manager'
 import { isAdminMailConnected } from '../../firebase/isAdminMail'
 import { Button } from "../../pages/register/styles.register"
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import setTaps2tellLanguage from '../../i18n/setLanguage'
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     AdminDashboardManager.getInstance().initialize()
   }, []);
 
+  useEffect(() => {
+    setTaps2tellLanguage(i18n)
+  }, [])
+
   return (
     <Container>
       <DashboardContainer>
         <LettersContainer>
-          <Header>בחרו אות</Header>
+          <Header>{t("chooseLetter")}</Header>
           {letters.map((l) => <LetterBox letter={l} key={l} />)}
         </LettersContainer>
       </DashboardContainer>
-      {isAdminMailConnected() && <Button onClick={() => navigate("/adminDashboard")}>דאשבורד למנהלים</Button>}
+      {isAdminMailConnected() && <Button onClick={() => navigate("/adminDashboard")}>{t("adminDashboard")}</Button>}
     </Container>
   );
 }

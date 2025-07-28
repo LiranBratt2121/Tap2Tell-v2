@@ -3,16 +3,47 @@ import { useState, useEffect } from 'react'
 import { GuideContainer, Header, MainContainer, SkipButton } from './styles.guide'
 import { videoAssets } from '../../components/showcaseLetter/assetManger'
 import { fetchFirebaseUserInformation, updateFirebaseUserInformation } from '../../firebase/UserInformation'
+import { useTranslation } from 'react-i18next'
+import { FirebaseUserInformation } from '../../firebase/interfaces'
 
 const Guide = () => {
     const navigate = useNavigate()
+    const { t } = useTranslation()
+
     const [showSkip, setShowSkip] = useState(false)
+    const [guideVideoSrc, setGuideVideoSrc] = useState("");
+    const [userInfo, setUserInfo] = useState<FirebaseUserInformation | null>(null);
 
     useEffect(() => {
+        const fetchUserInformation = async () => {
+            try {
+                const user = await fetchFirebaseUserInformation();
+                setUserInfo(user);
+            } catch (error) {
+                console.error("Error fetching user information:", error);
+                setUserInfo(null);
+            }
+        }
+
+        fetchUserInformation();
+    }, []);
+
+    useEffect(() => {
+        const setVideoLanguage = async () => {
+            if (!userInfo) {
+                console.error("User information is not available.");
+                return;
+            }
+
+            setGuideVideoSrc(
+                userInfo.desiredDisplayLanguage === 'en' ? videoAssets.GuideEnglish :
+                userInfo.desiredDisplayLanguage === 'he' ? videoAssets.Guide :
+                videoAssets.GuideEnglish // Default to Hebrew if no language is set
+            );
+        }
+
         const checkUserStatus = async () => {
             try {
-                const userInfo = await fetchFirebaseUserInformation();
-
                 if (userInfo === null) {
                     setShowSkip(false);
                     return;
@@ -31,19 +62,20 @@ const Guide = () => {
             }
         };
 
-        checkUserStatus();
-    }, []);
+        checkUserStatus().then(() => {
+            setVideoLanguage();
+        });
+    }, [userInfo]);
 
     return (
         <MainContainer>
-            <Header>איך משחקים</Header>
-            <GuideContainer controls playsInline autoPlay={true} onEnded={() => navigate('/dashboard')}>
-                <source src={videoAssets.Guide} type="video/mp4" />
+            <Header>{t("howToPlay")}</Header>
+            <GuideContainer src={guideVideoSrc} controls playsInline autoPlay={true} onEnded={() => navigate('/dashboard')}>
             </GuideContainer>
 
             {showSkip && (
                 <SkipButton onClick={() => navigate('/dashboard')}>
-                    דלג
+                    {t("skipGuide")}
                 </SkipButton>
             )}
         </MainContainer>

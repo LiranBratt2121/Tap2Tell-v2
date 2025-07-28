@@ -8,12 +8,14 @@ import uploadToStorage from '../../firebase/uploadToStorage';
 import ShowcaseLetter from '../../components/showcaseLetter/ShowcaseLetter';
 import { Letters } from '../../components/letterBox/types.letterBox';
 import { cameraErrorMessages } from './types.capture';
+import { useTranslation } from 'react-i18next';
 
 const Capture: React.FC = () => {
     const { letter } = useParams();
     const [aspectRatio, setAspectRatio] = useState<number>(16 / 9);
     const [errors, setErrors] = useState(false);
     const [isCameraReady, setCameraReady] = useState(false);
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
 
@@ -69,7 +71,7 @@ const Capture: React.FC = () => {
     }, [letter, navigate]);
 
     if (errors) {
-        return <div>Redirecting...</div>;
+        return <div>{t("Redirecting...")}</div>;
     }
 
     const videoConstraints: Omit<CameraProps, "errorMessages"> = {
@@ -80,7 +82,7 @@ const Capture: React.FC = () => {
     const handleCapture = async () => {
         if (!cameraRef.current) {
             console.warn("The camera is not ready yet...");
-            alert("המצלמה לא מוכנה. כנסו שוב ותצלמו רק כשהמצלמה מופיעה")
+            alert(t("The camera is not ready yet, please wait..."))
             return;
         }
 
@@ -97,7 +99,7 @@ const Capture: React.FC = () => {
             navigate(`/result?imgurl=${encodedURL}&letter=${letter}`);
         } catch (error) {
             console.error("Error during capture:", error);
-            alert("המצלמה לא מוכנה. כנסו שוב ותצלמו רק כשהמצלמה מופיעה")
+            alert(t("The camera is not ready yet, please wait..."))
             setErrors(true)
         }
     };

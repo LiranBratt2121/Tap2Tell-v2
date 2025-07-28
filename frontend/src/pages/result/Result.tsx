@@ -10,6 +10,7 @@ import { letterAssets } from "../../components/showcaseLetter/assetManger";
 import StarBorder from "../../components/border/Border";
 import { updateData as updateLetterDataFirebase } from "../../firebase/lettersLogic";
 import { isAdminMailConnected } from "../../firebase/isAdminMail";
+import { useTranslation } from "react-i18next";
 
 const Result = () => {
     const navigate = useNavigate();
@@ -26,6 +27,8 @@ const Result = () => {
     const [results, setResults] = useState<Prediction[] | null>(null);
     const [count, setCount] = useState(0);
 
+    const { t } = useTranslation();
+    
     const DEBUG = false;
 
     const imageRef = useRef<HTMLImageElement>(null); // Create ref for ResultImage
@@ -132,19 +135,19 @@ const Result = () => {
     return (
         <ResultContainer>
             <ResultBody>
-                <Header>{letterCorrect ? "!כל הכבוד" : "!נסו שוב"}</Header>
-                {!letterCorrect && <SeconderyHeader>{"האות הנכונה"}</SeconderyHeader>}
+                <Header>{letterCorrect ? t("Congratulations") : t("Try again")}</Header>
+                {!letterCorrect && <SeconderyHeader>{t("Right letter")}</SeconderyHeader>}
                 <LetterImage src={letterAssets[letter].image} />
                 <StarBorder won={letterCorrect}><ResultImage ref={imageRef} src={imgurl} /></StarBorder>
             </ResultBody>
 
             {isAdminMailConnected() && (
                 <ButtonContainer>
-                    <Button onClick={navigateToProcessedImage}>ראה תמונה מעובדת</Button>
+                    <Button onClick={navigateToProcessedImage}>{t("View processed image")}</Button>
                 </ButtonContainer>
             )}
             <ButtonContainer>
-                <Button onClick={() => navigate("/dashboard")}>חזור</Button>
+                <Button onClick={() => navigate("/dashboard")}>{t("Return")}</Button>
             </ButtonContainer>
         </ResultContainer>
     );
