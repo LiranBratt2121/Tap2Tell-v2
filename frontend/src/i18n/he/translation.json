@@ -1,0 +1,19 @@
+{
+    "_comment_dashboard": "Dashboard translations",
+    "welcome": "ברוך הבא",
+    "chooseLetter": "בחרו אות",
+    "adminDashboard": "דאשבורד למנהלים",
+    "_comment_guide": "Guide translations",
+    "howToPlay": "איך משחקים",
+    "skipGuide": "דגל",
+    "_comment_capture": "Capture translations",
+    "Redirecting...": "מפנה מחדש...",
+    "The camera is not ready yet, please wait...": "המצלמה לא מוכנה. כנסו שוב ותצלמו רק כשהמצלמה מופיעה",
+    
+    "_comment_result": "Result translations",
+    "Congratulations": "!כל הכבוד",
+    "Try again": "!נסו שוב",
+    "Right letter": "האות הנכונה",
+    "View processed image": "ראה תמונה מעובדת",
+    "Return": "חזור"
+}

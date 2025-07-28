@@ -1,0 +1,24 @@
+{
+    "_comment_dashboard": "Dashboard translations",
+
+    "welcome": "Welcome to the Dashboard",
+    "chooseLetter": "Choose a Letter",
+    "adminDashboard": "Admin Dashboard",
+
+    "_comment_guide": "Guide translations",
+
+    "howToPlay": "How to Play",
+    "skipGuide": "Skip",
+
+    "_comment_capture": "Capture translations",
+
+    "Redirecting...": "Redirecting...",
+    "The camera is not ready yet, please wait...": "The camera is not ready yet, please wait...",
+        
+    "_comment_result": "Result translations",
+    "Congratulations": "Congratulations!",
+    "Try again": "Try Again",
+    "Right letter": "The Right Letter",
+    "View processed image": "View Processed Image",
+    "Return": "Return"
+}
