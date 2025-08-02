@@ -1,4 +1,4 @@
-import { Header, RadioContainer, RadioImage, Text} from "../styles.register";
+import { Header, RadioContainer, RadioImage, Text} from "../../pages/register/styles.register";
 
 type SelectionOption<T> = {
   type: T;
