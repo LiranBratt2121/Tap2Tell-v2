@@ -46,3 +46,20 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
 `
+
+export const SettingsButtonStyled = styled.button`
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10;
+    background-color: ${props => props.theme.colors.primary};
+    padding-top: 0.7rem;
+    border-radius: 50%;
+    cursor: pointer;
+    color: ${props => props.theme.colors.text};
+
+    font-size: ${props => props.theme.fontSizes.large};
+    &:hover {
+        color: ${props => props.theme.colors.secondery};
+    }
+`
