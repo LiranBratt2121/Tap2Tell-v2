@@ -20,5 +20,10 @@
     "Try again": "Try Again",
     "Right letter": "The Right Letter",
     "View processed image": "View Processed Image",
-    "Return": "Return"
+    "Return": "Return",
+
+    "comment_settings": "Settings translations",
+    "Settings": "Settings",
+    "Account type": "Account Type",
+    "Preferred language": "Preferred Language"
 }

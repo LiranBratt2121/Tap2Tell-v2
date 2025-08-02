@@ -15,5 +15,10 @@
     "Try again": "!נסו שוב",
     "Right letter": "האות הנכונה",
     "View processed image": "ראה תמונה מעובדת",
-    "Return": "חזור"
+    "Return": "חזור",
+
+    "comment_settings": "Settings translations",
+    "Settings": "הגדרות",
+    "Account type": "סוג משתמש",
+    "Preferred language": "שפה מועדפת"
 }
