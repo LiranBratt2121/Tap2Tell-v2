@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Container, FormContainer } from '../../components/container/PageContainer';
 import { Header } from '../../components/text/Text';
 import { UserRole, UserDisplayLanguage, FirebaseUserInformation } from '../../firebase/interfaces';

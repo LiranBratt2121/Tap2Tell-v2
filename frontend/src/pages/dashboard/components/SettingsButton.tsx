@@ -1,4 +1,3 @@
-import React from 'react'
 import { CiSettings } from 'react-icons/ci';
 import { SettingsButtonStyled } from '../styles.dashboard';
 

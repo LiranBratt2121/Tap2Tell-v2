@@ -2,14 +2,14 @@ import styled from "styled-components";
 import Sky from "../../assets/sky.png"
 
 export const MainContainer = styled.div`
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     background-image: url(${Sky});
     background-size: cover;
 `;
 
 export const GuideContainer = styled.video`
-    height: 100vh;
+    height: 100%;
     width: 100vw;
 `;
 
@@ -32,7 +32,7 @@ export const Header = styled.h1`
 
 export const SkipButton = styled.button`
     position: absolute;
-    bottom: 2.5%;
+    bottom: -2rem;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 0.3rem;

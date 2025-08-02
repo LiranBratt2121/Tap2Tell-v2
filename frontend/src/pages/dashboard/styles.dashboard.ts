@@ -58,7 +58,7 @@ export const SettingsButtonStyled = styled.button`
     cursor: pointer;
     color: ${props => props.theme.colors.text};
 
-    font-size: ${props => props.theme.fontSizes.large};
+    font-size: ${props => props.theme.fontSizes.bigger};
     &:hover {
         color: ${props => props.theme.colors.secondery};
     }

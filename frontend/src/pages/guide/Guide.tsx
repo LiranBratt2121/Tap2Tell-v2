@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { GuideContainer, Header, MainContainer, SkipButton } from './styles.guide'
 import { videoAssets } from '../../components/showcaseLetter/assetManger'
 import { fetchFirebaseUserInformation, updateFirebaseUserInformation } from '../../firebase/UserInformation'
+import { isIOS, isSafari } from "react-device-detect"
 import { useTranslation } from 'react-i18next'
 import { FirebaseUserInformation } from '../../firebase/interfaces'
 
@@ -37,8 +38,8 @@ const Guide = () => {
 
             setGuideVideoSrc(
                 userInfo.desiredDisplayLanguage === 'en' ? videoAssets.GuideEnglish :
-                userInfo.desiredDisplayLanguage === 'he' ? videoAssets.Guide :
-                videoAssets.GuideEnglish // Default to Hebrew if no language is set
+                    userInfo.desiredDisplayLanguage === 'he' ? videoAssets.Guide :
+                        videoAssets.GuideEnglish // Default to Hebrew if no language is set
             );
         }
 
@@ -70,7 +71,7 @@ const Guide = () => {
     return (
         <MainContainer>
             <Header>{t("howToPlay")}</Header>
-            <GuideContainer src={guideVideoSrc} controlsList="nodownload" controls playsInline autoPlay={true} onEnded={() => navigate('/dashboard')}>
+            <GuideContainer key={guideVideoSrc} src={guideVideoSrc} playsInline autoPlay muted={isIOS || isSafari} onEnded={() => navigate('/dashboard')}>
             </GuideContainer>
 
             {showSkip && (
