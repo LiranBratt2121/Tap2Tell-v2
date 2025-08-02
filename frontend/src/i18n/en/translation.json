@@ -25,5 +25,7 @@
     "comment_settings": "Settings translations",
     "Settings": "Settings",
     "Account type": "Account Type",
-    "Preferred language": "Preferred Language"
+    "Preferred language": "Preferred Language",
+    "Settings updated successfully": "Settings updated successfully",
+    "Save Settings": "Save Settings"
 }

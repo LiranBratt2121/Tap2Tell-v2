@@ -9,16 +9,16 @@
     "_comment_capture": "Capture translations",
     "Redirecting...": "מפנה מחדש...",
     "The camera is not ready yet, please wait...": "המצלמה לא מוכנה. כנסו שוב ותצלמו רק כשהמצלמה מופיעה",
-    
     "_comment_result": "Result translations",
     "Congratulations": "!כל הכבוד",
     "Try again": "!נסו שוב",
     "Right letter": "האות הנכונה",
     "View processed image": "ראה תמונה מעובדת",
     "Return": "חזור",
-
     "comment_settings": "Settings translations",
     "Settings": "הגדרות",
     "Account type": "סוג משתמש",
-    "Preferred language": "שפה מועדפת"
+    "Preferred language": "שפה מועדפת",
+    "Settings updated successfully": "ההגדרות עודכנו בהצלחה",
+    "Save Settings": "שמור הגדרות"
 }
