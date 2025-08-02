@@ -15,6 +15,7 @@ import Register from './pages/register/Register';
 import ProcessedImage from './pages/processedImage/ProcessedImage';
 import AdminDashboard from './pages/adminDashboard/AdminDashboard';
 import ProtectedAdminRoute from './protectedAdminRoute';
+import Settings from './pages/settings/Settings';
 
 startFirebase();
 
@@ -82,6 +83,15 @@ const App: React.FC = () => {
                 <ProtectedAdminRoute>
                   <AdminDashboard />
                 </ProtectedAdminRoute>
+              }
+            />
+
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
               }
             />
             <Route path="*" element={<Navigate to="/" />} />
