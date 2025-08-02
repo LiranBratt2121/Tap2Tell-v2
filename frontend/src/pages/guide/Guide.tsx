@@ -70,7 +70,7 @@ const Guide = () => {
     return (
         <MainContainer>
             <Header>{t("howToPlay")}</Header>
-            <GuideContainer src={guideVideoSrc} controls playsInline autoPlay={true} onEnded={() => navigate('/dashboard')}>
+            <GuideContainer src={guideVideoSrc} controlsList="nodownload" controls playsInline autoPlay={true} onEnded={() => navigate('/dashboard')}>
             </GuideContainer>
 
             {showSkip && (
