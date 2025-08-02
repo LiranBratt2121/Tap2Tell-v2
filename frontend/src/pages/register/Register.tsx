@@ -1,22 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Button, FormContainer, RegisterContainer, Title } from './styles.register';
-import { imageAssets } from '../../components/showcaseLetter/assetManger';
 import { UserDisplayLanguage, UserRole } from '../../firebase/interfaces';
 import { updateFirebaseUserInformation } from '../../firebase/UserInformation';
-import { SelectionGroup } from './component/SelectionGroup';
+import { SelectionGroup } from '../../components/selectionGroup/SelectionGroup';
 import { useTranslation } from 'react-i18next';
 import setTaps2tellLanguage from '../../i18n/setLanguage';
-
-const roles: { type: UserRole, label: string, image: string }[] = [
-    { type: 'student', label: 'תלמיד', image: imageAssets.Student },
-    { type: 'teacher', label: 'מורה', image: imageAssets.Teacher },
-];
-
-const languages: { type: UserDisplayLanguage, label: string, image: string }[] = [
-    { type: 'he', label: 'עברית', image: imageAssets.Hebrew },
-    { type: 'en', label: 'English', image: imageAssets.English },
-]
+import { languages, roles } from '../../components/selectionGroup/options';
+import { SendButton } from '../../components/buttons/SendButton';
+import { Container, FormContainer } from '../../components/container/PageContainer';
+import { Title } from '../../components/selectionGroup/styles.selectionGroup';
 
 const Register = () => {
     const [selectedRole, setSelectedRole] = useState<UserRole>('');
@@ -51,7 +43,7 @@ const Register = () => {
     };
 
     return (
-        <RegisterContainer>
+        <Container>
             <FormContainer>
                 <Title>ברוך הבא</Title>
 
@@ -69,9 +61,9 @@ const Register = () => {
                     onSelect={setSelectedLang}
                 />
 
-                <Button onClick={handleContinue}>המשך</Button>
+                <SendButton onClick={handleContinue}>המשך</SendButton>
             </FormContainer>
-        </RegisterContainer>
+        </Container>
     );
 };
 
