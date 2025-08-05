@@ -6,7 +6,7 @@ import { AnimatedPopup, Overlay } from './styles.showcaseLetter';
 import { useTranslation } from 'react-i18next';
 
 const ShowcaseLetter: React.FC<ShowcaseProps> = ({ letter }) => {
-  const { image, audio } = useMemo(() => letterAssets[letter], [letter]);
+  const { image, audio: hebrewLetterIntro } = useMemo(() => letterAssets[letter], [letter]);
   const [isVisible, setIsVisible] = useState(false);
   const { i18n } = useTranslation();
 
@@ -15,31 +15,59 @@ const ShowcaseLetter: React.FC<ShowcaseProps> = ({ letter }) => {
     config: { tension: 280, friction: 20 },
   });
 
-  useEffect(() => {
-    if (image && audio) {
-      setIsVisible(true);
+  const getAudioShowcase = () => {
+    const hebrewAudio = new Audio(hebrewLetterIntro);
+    const englishAudio = new Audio(additionalAssets.CurrentEnglishAudio);
+    const TRIM_TIME_MS = 1200; // 1.2 seconds in milliseconds
+    let timeout: ReturnType<typeof setTimeout>;
 
-      const getAudioSource = () => {
-        if (i18n.language === 'he') return audio;
-        if (i18n.language === 'en') return additionalAssets.CurrentEnglishAudio;
-        return audio;
-      };
-      
-      const sound = new Audio(getAudioSource());
+    if (i18n.language === "en") {
+      hebrewAudio.play();
 
-      sound.play();
+      timeout = setTimeout(() => {
+        hebrewAudio.pause();
+        hebrewAudio.currentTime = 0;
+        englishAudio.play();
+      }, TRIM_TIME_MS);
 
-      sound.onended = () => {
+      englishAudio.onended = () => {
         setIsVisible(false);
       };
 
-      return () => {
-        sound.pause();
-        sound.currentTime = 0;
-        sound.remove();
+      return {
+        audios: [hebrewAudio, englishAudio],
+        cancel: () => clearTimeout(timeout),
+      };
+    } else {
+      hebrewAudio.onended = () => {
+        setIsVisible(false);
+      };
+
+      hebrewAudio.play();
+
+      return {
+        audios: [hebrewAudio],
+        cancel: () => {},
       };
     }
-  }, [image, audio]);
+  };
+
+  useEffect(() => {
+    if (!image || !hebrewLetterIntro) return;
+
+    setIsVisible(true);
+
+    const { audios, cancel } = getAudioShowcase();
+
+    return () => {
+      cancel();
+      audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.onended = null;
+      });
+    };
+  }, [image, hebrewLetterIntro, i18n.language]);
 
   return (
     <Overlay>
