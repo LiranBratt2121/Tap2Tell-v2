@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { getAdditionalUserInfo } from 'firebase/auth';
 import { warmUpServer } from '../../firebase/warmupFirebase';
 import { fetchFirebaseUserInformation } from '../../firebase/UserInformation';
+import setTaps2tellLanguage from '../../i18n/setLanguage';
+import i18n from '../../i18';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ const Login = () => {
               if (additionUserInfo?.isNewUser || !currentRole || !desiredDisplayLanguage) {
                 navigate("/register");
               } else {
+                setTaps2tellLanguage(i18n);
                 navigate("/guide");
               }
             })

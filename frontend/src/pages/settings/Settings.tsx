@@ -9,6 +9,9 @@ import { SendButton } from '../../components/buttons/SendButton';
 import { updateFirebaseUserInformation } from '../../firebase/UserInformation';
 import { useNavigate } from 'react-router-dom';
 import { BackButton } from '../../components/buttons/BackButton';
+import setTaps2tellLanguage from '../../i18n/setLanguage';
+import i18n from '../../i18';
+
 const Settings = () => {
   const [selectedRole, setSelectedRole] = useState<UserRole>('');
   const [selectedLang, setSelectedLang] = useState<UserDisplayLanguage>('');
@@ -31,6 +34,7 @@ const Settings = () => {
 
     if (success) {
       console.log('User information updated successfully');
+      setTaps2tellLanguage(i18n)
       alert(t("Settings updated successfully"));
     } else {
       console.error('Failed to update user information');
