@@ -74,11 +74,11 @@ const Guide = () => {
             <GuideContainer key={guideVideoSrc} src={guideVideoSrc} playsInline autoPlay muted={isIOS || isSafari} onEnded={() => navigate('/dashboard')}>
             </GuideContainer>
 
-            {showSkip && (
+            {/* {showSkip && (
                 <SkipButton onClick={() => navigate('/dashboard')}>
                     {t("skipGuide")}
                 </SkipButton>
-            )}
+            )} */}
         </MainContainer>
     )
 }
