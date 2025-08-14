@@ -5,12 +5,12 @@ import { UserRole, UserDisplayLanguage, FirebaseUserInformation } from '../../fi
 import { languages, roles } from '../../components/selectionGroup/options';
 import { SelectionGroup } from '../../components/selectionGroup/SelectionGroup';
 import { t } from 'i18next';
-import { SendButton } from '../../components/buttons/SendButton';
 import { updateFirebaseUserInformation } from '../../firebase/UserInformation';
 import { useNavigate } from 'react-router-dom';
 import { BackButton } from '../../components/buttons/BackButton';
 import setTaps2tellLanguage from '../../i18n/setLanguage';
 import i18n from '../../i18';
+import AcceptButton, {  } from '../../components/buttons/AcceptButton';
 
 const Settings = () => {
   const [selectedRole, setSelectedRole] = useState<UserRole>('');
@@ -62,7 +62,8 @@ const Settings = () => {
           onSelect={setSelectedLang}
         />
 
-        <SendButton onClick={handlePress}>{t("Save Settings")}</SendButton>
+        <AcceptButton
+          size={48} onClick={handlePress}>{t("Save Settings")}</AcceptButton>
       </FormContainer>
     </Container>
   )

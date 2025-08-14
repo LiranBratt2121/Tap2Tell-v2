@@ -9,6 +9,7 @@ import { languages, roles } from '../../components/selectionGroup/options';
 import { SendButton } from '../../components/buttons/SendButton';
 import { Container, FormContainer } from '../../components/container/PageContainer';
 import { Title } from '../../components/selectionGroup/styles.selectionGroup';
+import AcceptButton from '../../components/buttons/AcceptButton';
 
 const Register = () => {
     const [selectedRole, setSelectedRole] = useState<UserRole>('');
@@ -61,7 +62,7 @@ const Register = () => {
                     onSelect={setSelectedLang}
                 />
 
-                <SendButton onClick={handleContinue}>המשך</SendButton>
+                <AcceptButton size={48} onClick={handleContinue}>המשך</AcceptButton>
             </FormContainer>
         </Container>
     );

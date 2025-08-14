@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { GuideContainer, Header, MainContainer, SkipButton } from './styles.guide'
+import { GuideContainer, Header, MainContainer } from './styles.guide'
 import { videoAssets } from '../../components/showcaseLetter/assetManger'
 import { fetchFirebaseUserInformation, updateFirebaseUserInformation } from '../../firebase/UserInformation'
 import { isIOS, isSafari } from "react-device-detect"
@@ -11,7 +11,7 @@ const Guide = () => {
     const navigate = useNavigate()
     const { t } = useTranslation()
 
-    const [showSkip, setShowSkip] = useState(false)
+    const [_, setShowSkip] = useState(false)
     const [guideVideoSrc, setGuideVideoSrc] = useState("");
     const [userInfo, setUserInfo] = useState<FirebaseUserInformation | null>(null);
 
