@@ -3,7 +3,6 @@ import styled from "styled-components";
 const DashboardContainer = styled.div`
   padding: 24px;
   background-color: #f5f7fa;
-  min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 `;
 

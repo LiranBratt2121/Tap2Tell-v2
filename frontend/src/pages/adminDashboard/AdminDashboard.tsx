@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import { useDashboard } from './hooks/useDashboard';
 import { Title } from '../login/styles.login';
 import { LetterPerformance } from './components/analyticsComponents/LetterPerformence';
@@ -20,11 +21,7 @@ const AdminDashboard: React.FC = () => {
 };
 
 const DashboardContent: React.FC = () => {
-  const { metrics, loading, error } = useDashboard();
-
-  if (loading) {
-    return <LoadingState />;
-  }
+  const { metrics, error } = useDashboard();
 
   if (error) {
     return <ErrorState error={error} />;
