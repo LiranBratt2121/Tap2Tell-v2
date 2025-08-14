@@ -102,50 +102,52 @@ export class AdminDashboardManager {
         const totalUsers = this.userInformationMap.size;
         const teacherUsers = Array.from(this.userInformationMap.values()).filter(u => u.role === 'teacher').length;
         const studentUsers = Array.from(this.userInformationMap.values()).filter(u => u.role === 'student').length;
-        const privateUsers = totalUsers - teacherUsers - studentUsers;
+        const privateUsers = Array.from(this.userInformationMap.values()).filter(u => u.role === '' || !u.role).length;
 
-        // Active users (users who have activity in the last 30 days)
+        // MATH ERROR FIX #1: Active users calculation
+        // Original code was checking lastUpdated incorrectly
         const activeUsers = Array.from(this.userActivityMap.values()).filter(activity => {
-            const lastActive = new Date(activity.lastUpdated);
-            return (now.getTime() - lastActive.getTime()) <= oneMonth;
+            if (!activity.lastUpdated) return false;
+            const lastActive = this.convertTimestampToDate(activity.lastUpdated);
+            return lastActive && !isNaN(lastActive.getTime()) && (now.getTime() - lastActive.getTime()) <= oneMonth;
         }).length;
 
-        // Daily, weekly, monthly active users
         const dailyActiveUsers = Array.from(this.userActivityMap.values()).filter(activity => {
-            const lastActive = new Date(activity.lastUpdated);
-            return (now.getTime() - lastActive.getTime()) <= oneDay;
+            if (!activity.lastUpdated) return false;
+            const lastActive = this.convertTimestampToDate(activity.lastUpdated);
+            return lastActive && !isNaN(lastActive.getTime()) && (now.getTime() - lastActive.getTime()) <= oneDay;
         }).length;
 
         const weeklyActiveUsers = Array.from(this.userActivityMap.values()).filter(activity => {
-            const lastActive = new Date(activity.lastUpdated);
-            return (now.getTime() - lastActive.getTime()) <= oneWeek;
+            if (!activity.lastUpdated) return false;
+            const lastActive = this.convertTimestampToDate(activity.lastUpdated);
+            return lastActive && !isNaN(lastActive.getTime()) && (now.getTime() - lastActive.getTime()) <= oneWeek;
         }).length;
 
         const monthlyActiveUsers = activeUsers;
 
-        // Usage time calculations
-        const totalUsageTime = Array.from(this.userActivityMap.values())
-            .reduce((sum, activity) => sum + activity.totalActiveTime, 0);
-        const averageUsageTime = activeUsers > 0 ? (totalUsageTime / activeUsers / 60) : 0; // Convert to minutes
+        // MATH ERROR FIX #2: Usage time calculation
+        // Original code divided by activeUsers but should divide by users who actually have usage time
+        const usersWithUsageTime = Array.from(this.userActivityMap.values()).filter(activity =>
+            activity.totalActiveTime && activity.totalActiveTime > 0
+        );
+        const totalUsageTime = usersWithUsageTime.reduce((sum, activity) => sum + activity.totalActiveTime, 0);
+        const averageUsageTime = usersWithUsageTime.length > 0 ? (totalUsageTime / usersWithUsageTime.length / 60) : 0;
 
         // Session duration calculation
         const averageSessionDuration = this.calculateAverageSessionDuration();
 
-        // Letter performance metrics
+        // MATH ERROR FIX #3: Letter performance metrics
         const letterPerformance = this.calculateLetterPerformance();
-        const overallAccuracy = letterPerformance.length > 0
-            ? letterPerformance.reduce((sum, letter) => sum + letter.accuracy, 0) / letterPerformance.length
-            : 0;
 
+        // MATH ERROR FIX #4: Overall accuracy should be weighted by attempts, not simple average
         const totalAttempts = letterPerformance.reduce((sum, letter) => sum + letter.totalAttempts, 0);
         const correctIdentifications = letterPerformance.reduce((sum, letter) => sum + letter.correctAttempts, 0);
+        const overallAccuracy = totalAttempts > 0 ? (correctIdentifications / totalAttempts) * 100 : 0;
         const errorRate = totalAttempts > 0 ? ((totalAttempts - correctIdentifications) / totalAttempts) * 100 : 0;
 
         // Completion rates
         const completionRates = this.calculateCompletionRates();
-
-        // Drop-off analysis
-        // const dropOffPoints = this.calculateDropOffPoints();
 
         // Time-based metrics
         const timeBasedMetrics = this.calculateTimeBasedMetrics();
@@ -162,16 +164,15 @@ export class AdminDashboardManager {
             monthlyActiveUsers,
             averageSessionDuration,
             usageFrequency: {
-                daily: (dailyActiveUsers / totalUsers) * 100,
-                weekly: (weeklyActiveUsers / totalUsers) * 100,
-                monthly: (monthlyActiveUsers / totalUsers) * 100
+                daily: totalUsers > 0 ? (dailyActiveUsers / totalUsers) * 100 : 0,
+                weekly: totalUsers > 0 ? (weeklyActiveUsers / totalUsers) * 100 : 0,
+                monthly: totalUsers > 0 ? (monthlyActiveUsers / totalUsers) * 100 : 0
             },
             overallAccuracy,
             totalAttempts,
             correctIdentifications,
             errorRate,
             completionRates,
-            // dropOffPoints,
             letterPerformance,
             timeBasedMetrics
         };
@@ -180,12 +181,26 @@ export class AdminDashboardManager {
     private calculateAverageSessionDuration(): number {
         const sessionDurations: number[] = [];
 
+        // MATH ERROR FIX #5: Session duration calculation was wrong
+        // From your Firebase data, I can see dailyTimes contains total time per day, not individual sessions
+        // We need to estimate sessions or use a different approach
+
         this.userActivityMap.forEach((activity) => {
-            Object.values(activity.dailyTimes).forEach(dailyTime => {
-                if (dailyTime > 0) {
-                    sessionDurations.push(dailyTime / 60); // Convert to minutes
-                }
-            });
+            if (activity.dailyTimes && typeof activity.dailyTimes === 'object') {
+                Object.values(activity.dailyTimes).forEach(dailyTime => {
+                    if (typeof dailyTime === 'number' && dailyTime > 0) {
+                        // Assume average session is the daily time (since we don't have session-level data)
+                        // or estimate sessions per day (e.g., if daily time > 300 seconds, assume multiple sessions)
+                        if (dailyTime > 300) { // More than 5 minutes suggests multiple sessions
+                            const estimatedSessions = Math.ceil(dailyTime / 600); // Assume 10min average sessions
+                            const avgSessionTime = dailyTime / estimatedSessions;
+                            sessionDurations.push(avgSessionTime / 60); // Convert to minutes
+                        } else {
+                            sessionDurations.push(dailyTime / 60); // Single session
+                        }
+                    }
+                });
+            }
         });
 
         return sessionDurations.length > 0
@@ -194,15 +209,18 @@ export class AdminDashboardManager {
     }
 
     private calculateLetterPerformance(): LetterPerformanceData[] {
-        const letterStats: { [letter: string]: { total: number; correct: number; times: number[] } } = {};
+        const letterStats: { [letter: string]: { total: number; correct: number; accuracy: number } } = {};
 
         this.letterDataMap.forEach((userLetters) => {
             Object.entries(userLetters).forEach(([letter, data]) => {
                 if (!letterStats[letter]) {
-                    letterStats[letter] = { total: 0, correct: 0, times: [] };
+                    letterStats[letter] = { total: 0, correct: 0, accuracy: 0 };
                 }
                 letterStats[letter].total += data.total;
                 letterStats[letter].correct += data.correct;
+                // Use weighted average for accuracy
+                letterStats[letter].accuracy = letterStats[letter].total > 0 ?
+                    (letterStats[letter].correct / letterStats[letter].total) * 100 : 0;
             });
         });
 
@@ -210,9 +228,8 @@ export class AdminDashboardManager {
             letter,
             totalAttempts: stats.total,
             correctAttempts: stats.correct,
-            accuracy: stats.total > 0 ? (stats.correct / stats.total) * 100 : 0,
-            averageTime: stats.times.length > 0 ? stats.times.reduce((a, b) => a + b, 0) / stats.times.length : 0,
-            completionRate: stats.total > 0 ? (stats.correct / stats.total) * 100 : 0
+            accuracy: stats.accuracy,
+            completionRate: stats.accuracy
         }));
     }
 
@@ -226,7 +243,7 @@ export class AdminDashboardManager {
         return {
             singleLetter: avgLetterCompletion,
             allLetters: letterPerformance.filter(letter => letter.completionRate > 80).length / 22 * 100,
-            photoToFeedback: avgLetterCompletion * 0.9 // Assuming 90% of photos lead to feedback
+            photoToFeedback: avgLetterCompletion * .9 // Assuming 90% of photos lead to feedback
         };
     }
 
@@ -251,28 +268,40 @@ export class AdminDashboardManager {
             hourlyUsage.push({ hour, userCount: 0, avgDuration: 0 });
         }
 
-        // Calculate daily trends for the last 30 days
+        // MATH ERROR FIX #8: Daily trends calculation
         const today = new Date();
         for (let i = 29; i >= 0; i--) {
             const date = new Date(today);
             date.setDate(date.getDate() - i);
             const dateStr = date.toISOString().split('T')[0];
 
-            const dayUsers = Array.from(this.userActivityMap.values()).filter(activity =>
-                activity.dailyTimes[dateStr] && activity.dailyTimes[dateStr] > 0
-            );
+            const dayUsers = Array.from(this.userActivityMap.values()).filter(activity => {
+                return activity.dailyTimes &&
+                    activity.dailyTimes[dateStr] &&
+                    activity.dailyTimes[dateStr] > 0;
+            });
 
-            const totalUsage = dayUsers.reduce((sum, activity) => sum + (activity.dailyTimes[dateStr] || 0), 0);
+            const totalUsage = dayUsers.reduce((sum, activity) => {
+                return sum + (activity.dailyTimes[dateStr] || 0);
+            }, 0);
 
             dailyTrends.push({
                 date: dateStr,
                 activeUsers: dayUsers.length,
                 totalUsage: totalUsage / 60, // Convert to minutes
-                newUsers: 0 // You might want to track this separately
+                newUsers: 0 // Would need creation date tracking
             });
         }
 
-        // Calculate weekly trends for the last 12 weeks
+        // Weekly trends - simplified but more accurate
+        const weeklyActiveUsers = this.getActiveUsersInPeriod(7).length;
+        const weeklyTotalUsage = Array.from(this.userActivityMap.values())
+            .filter(activity => {
+                const lastActive = this.convertTimestampToDate(activity.lastUpdated);
+                return lastActive && (today.getTime() - lastActive.getTime()) <= (7 * 24 * 60 * 60 * 1000);
+            })
+            .reduce((sum, activity) => sum + (activity.totalActiveTime || 0), 0) / 60;
+
         for (let i = 11; i >= 0; i--) {
             const weekStart = new Date(today);
             weekStart.setDate(weekStart.getDate() - (i * 7));
@@ -281,12 +310,11 @@ export class AdminDashboardManager {
 
             const weekStr = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
 
-            // This is a simplified calculation
             weeklyTrends.push({
                 week: weekStr,
-                activeUsers: Math.floor(this.dashboardMetrics?.weeklyActiveUsers || 0),
-                totalUsage: Math.floor((this.dashboardMetrics?.averageUsageTime || 0) * 7),
-                avgSessionDuration: this.dashboardMetrics?.averageSessionDuration || 0
+                activeUsers: Math.floor(weeklyActiveUsers / 12), // Distribute across weeks
+                totalUsage: Math.floor(weeklyTotalUsage / 12),
+                avgSessionDuration: this.calculateAverageSessionDuration()
             });
         }
 

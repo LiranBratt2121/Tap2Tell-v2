@@ -18,14 +18,14 @@ export const MetricsOverview: React.FC = () => {
           accent="#667eea"
           value={formatNumber(metrics.totalUsers)}
           label="סה״כ משתמשים"
-          description="כלל המשתמשים הרשומים במערכת"
+          description="ספירה של כלל המשתמשים שנרשמו למערכת, ללא קשר לרמת הפעילות שלהם"
         />
         
         <DashboardMetricCard
           accent="#48bb78"
           value={formatNumber(metrics.activeUsers)}
           label="משתמשים פעילים"
-          description="פעילים ב-30 הימים האחרונים"
+          description="מספר המשתמשים שהיו פעילים באפליקציה במהלך 30 הימים האחרונים"
         />
         
         <DashboardMetricCard
@@ -46,7 +46,7 @@ export const MetricsOverview: React.FC = () => {
           accent="#38b2ac"
           value={formatNumber(metrics.privateUsers)}
           label="משתמשים פרטיים"
-          description="לימוד עצמאי בבית"
+          description="משתמשים הלא מוגדרים במערכת כתלמידים/מורים"
         />
       </MetricsGrid>
 
@@ -57,7 +57,7 @@ export const MetricsOverview: React.FC = () => {
           accent="#f56565"
           value={`${Math.round(metrics.averageUsageTime)}m`}
           label="זמן שימוש ממוצע"
-          description="דקות ממוצעות לכל משתמש"
+          description="סך הזמן הממוצע (בדקות) שכל משתמש מבלה באפליקציה -> זמן כללי שנוצל באפליקציה על ידי משתמשים חלקי כמות המשתמשים"
         />
         
         <DashboardMetricCard
@@ -78,7 +78,7 @@ export const MetricsOverview: React.FC = () => {
           accent="#d69e2e"
           value={`${Math.round(metrics.averageSessionDuration)}m`}
           label="משך הפעלה ממוצע"
-          description="זמן ממוצע לכל הפעלה"
+          description="משך הזמן הממוצע (בדקות) של סשן בודד של משתמש באפליקציה"
         />
       </MetricsGrid>
 
@@ -117,26 +117,26 @@ export const MetricsOverview: React.FC = () => {
       {/* Completion Rates */}
       <SectionTitle>אחוזי השלמה</SectionTitle>
       <MetricsGrid>
-        <DashboardMetricCard
+        {/* <DashboardMetricCard
           accent="#48bb78"
           value={formatPercentage(metrics.completionRates.singleLetter)}
           label="השלמת אות בודדת"
-          description="צילום + זיהוי + פידבק"
-        />
+          description="אחוז המשתמשים שהשלימו את תהליך זיהוי אות אחת במלואו (צילום, זיהוי וקבלת פידבק)"
+        /> */}
         
         <DashboardMetricCard
           accent="#ed8936"
           value={formatPercentage(metrics.completionRates.allLetters)}
           label="השלמת כל האותיות"
-          description="22 האותיות של האלף-בית"
+          description="אחוז המשתמשים שהשלימו את תהליך הזיהוי של כל 22 האותיות של האלף-בית"
         />
         
-        <DashboardMetricCard
+        {/* <DashboardMetricCard
           accent="#9f7aea"
           value={formatPercentage(metrics.completionRates.photoToFeedback)}
           label="מצילום לפידבק"
-          description="אחוז המשלימים את התהליך"
-        />
+          description="אחוז המשתמשים שממשיכים בתהליך לאחר צילום האות ועד לקבלת הפידבק הסופי"
+        /> */}
       </MetricsGrid>
     </>
   );
