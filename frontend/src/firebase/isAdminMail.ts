@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { adminMails } from "../pages/adminDashboard/adminDashboard.constants";
+import { adminMails } from "../pages/adminDashboard/v2/adminDashboard.constants";
 
 export const isAdminMailConnected = (): boolean => {
     const email = getAuth().currentUser?.email;

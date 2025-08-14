@@ -1,4 +1,4 @@
-import { FirebaseLetters, FirebaseUserActivity, FirebaseUserInformation } from "../../firebase/interfaces";
+import { FirebaseLetters, FirebaseUserActivity, FirebaseUserInformation } from "../../../firebase/interfaces";
 
 export interface DashboardMetrics {
     // User Metrics

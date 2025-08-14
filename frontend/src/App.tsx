@@ -13,9 +13,9 @@ import Guide from './pages/guide/Guide';
 import useTimeTracker from './hooks/useTimeTracker';
 import Register from './pages/register/Register';
 import ProcessedImage from './pages/processedImage/ProcessedImage';
-import AdminDashboard from './pages/adminDashboard/AdminDashboard';
 import ProtectedAdminRoute from './protectedAdminRoute';
 import Settings from './pages/settings/Settings';
+import AdminDashboard from './pages/adminDashboard/AdminDashboard';
 
 startFirebase();
 
