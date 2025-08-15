@@ -48,6 +48,30 @@ import TavAudio from "../../assets/audio/Tav.mp3";
 import CurrentEnglishAudio from "../../assets/audio/currentLetterEnglish.mp3";
 
 
+// Import English audio for each letter
+import AlefEnglishAudio from "../../assets/audio/AlefEnglish.mp3";
+import BetEnglishAudio from "../../assets/audio/BetEnglish.mp3";
+import GimelEnglishAudio from "../../assets/audio/GimelEnglish.mp3";
+import DaletEnglishAudio from "../../assets/audio/DaletEnglish.mp3";
+import HeEnglishAudio from "../../assets/audio/HeiEnglish.mp3";
+import VavEnglishAudio from "../../assets/audio/VavEnglish.mp3";
+import ZayinEnglishAudio from "../../assets/audio/ZineEnglish.mp3";
+import HetEnglishAudio from "../../assets/audio/HetEnglish.mp3";
+import TetEnglishAudio from "../../assets/audio/TetEnglish.mp3";
+import YodEnglishAudio from "../../assets/audio/YudEnglish.mp3";
+import KafEnglishAudio from "../../assets/audio/KafEnglish.mp3";
+import LamedEnglishAudio from "../../assets/audio/LamedEnglish.mp3";
+import MemEnglishAudio from "../../assets/audio/MemEnglish.mp3";
+import NunEnglishAudio from "../../assets/audio/NunEnglish.mp3";
+import SamechEnglishAudio from "../../assets/audio/SamechEnglish.mp3";
+import AyinEnglishAudio from "../../assets/audio/AlefEnglish.mp3";
+import PehEnglishAudio from "../../assets/audio/PehEnglish.mp3";
+import TsadehEnglishAudio from "../../assets/audio/TsadikEnglish.mp3";
+import QofEnglishAudio from "../../assets/audio/KufEnglish.mp3";
+import ReshEnglishAudio from "../../assets/audio/ReishEnglish.mp3";
+import ShinEnglishAudio from "../../assets/audio/ShinEnglish.mp3";
+import TavEnglishAudio from "../../assets/audio/TafEnglish.mp3";
+
 // Additional audio for success and failure
 import SuccessAudio from "../../assets/audio/Success.mp3";
 import FailureAudio from "../../assets/audio/faliure.mp3";
@@ -74,29 +98,30 @@ import { LetterAssetsProps } from "./types.leterBox";
 
 
 export const letterAssets: LetterAssetsProps = {
-    Alef: { image: AlefImage, audio: AlefAudio },
-    Bet: { image: BetImage, audio: BetAudio },
-    Gimel: { image: GimelImage, audio: GimelAudio },
-    Dalet: { image: DaletImage, audio: DaletAudio },
-    He: { image: HeImage, audio: HeAudio },
-    Vav: { image: VavImage, audio: VavAudio },
-    Zayin: { image: ZayinImage, audio: ZayinAudio },
-    Het: { image: HetImage, audio: HetAudio },
-    Tet: { image: TetImage, audio: TetAudio },
-    Yod: { image: YodImage, audio: YodAudio },
-    Kaf: { image: KafImage, audio: KafAudio },
-    Lamed: { image: LamedImage, audio: LamedAudio },
-    Mem: { image: MemImage, audio: MemAudio },
-    Nun: { image: NunImage, audio: NunAudio },
-    Samech: { image: SamechImage, audio: SamechAudio },
-    Ayin: { image: AyinImage, audio: AyinAudio },
-    Peh: { image: PehImage, audio: PehAudio },
-    Tsadeh: { image: TsadehImage, audio: TsadehAudio },
-    Qof: { image: QofImage, audio: QofAudio },
-    Resh: { image: ReshImage, audio: ReshAudio },
-    Shin: { image: ShinImage, audio: ShinAudio },
-    Tav: { image: TavImage, audio: TavAudio },
+    Alef: { image: AlefImage, audio: AlefAudio, audioEnglish: AlefEnglishAudio },
+    Bet: { image: BetImage, audio: BetAudio, audioEnglish: BetEnglishAudio },
+    Gimel: { image: GimelImage, audio: GimelAudio, audioEnglish: GimelEnglishAudio },
+    Dalet: { image: DaletImage, audio: DaletAudio, audioEnglish: DaletEnglishAudio },
+    He: { image: HeImage, audio: HeAudio, audioEnglish: HeEnglishAudio },
+    Vav: { image: VavImage, audio: VavAudio, audioEnglish: VavEnglishAudio },
+    Zayin: { image: ZayinImage, audio: ZayinAudio, audioEnglish: ZayinEnglishAudio },
+    Het: { image: HetImage, audio: HetAudio, audioEnglish: HetEnglishAudio },
+    Tet: { image: TetImage, audio: TetAudio, audioEnglish: TetEnglishAudio },
+    Yod: { image: YodImage, audio: YodAudio, audioEnglish: YodEnglishAudio },
+    Kaf: { image: KafImage, audio: KafAudio, audioEnglish: KafEnglishAudio },
+    Lamed: { image: LamedImage, audio: LamedAudio, audioEnglish: LamedEnglishAudio },
+    Mem: { image: MemImage, audio: MemAudio, audioEnglish: MemEnglishAudio },
+    Nun: { image: NunImage, audio: NunAudio, audioEnglish: NunEnglishAudio },
+    Samech: { image: SamechImage, audio: SamechAudio, audioEnglish: SamechEnglishAudio },
+    Ayin: { image: AyinImage, audio: AyinAudio, audioEnglish: AyinEnglishAudio },
+    Peh: { image: PehImage, audio: PehAudio, audioEnglish: PehEnglishAudio },
+    Tsadeh: { image: TsadehImage, audio: TsadehAudio, audioEnglish: TsadehEnglishAudio },
+    Qof: { image: QofImage, audio: QofAudio, audioEnglish: QofEnglishAudio },
+    Resh: { image: ReshImage, audio: ReshAudio, audioEnglish: ReshEnglishAudio },
+    Shin: { image: ShinImage, audio: ShinAudio, audioEnglish: ShinEnglishAudio },
+    Tav: { image: TavImage, audio: TavAudio, audioEnglish: TavEnglishAudio },
 };
+
 
 export const additionalAssets = {
     Success: SuccessAudio,
