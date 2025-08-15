@@ -4,5 +4,5 @@ interface ShowcaseProps {
     letter: Letters;
 }
 
-type LetterAssetsProps = { [letter: string]: { image: string; audio: string } };
+type LetterAssetsProps = { [letter: string]: { image: string; audio: string, audioEnglish: string } };
 export type { ShowcaseProps, LetterAssetsProps };
