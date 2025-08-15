@@ -1,6 +1,7 @@
 import { FirebaseLetters, FirebaseUserActivity, FirebaseUserInformation } from "../../firebase/interfaces";
 import { fetchCollection } from "../../firebase/UserInformation";
 import { DailyTrend, DashboardMetrics, HourlyUsage, LetterPerformanceData, UserSearchResult, WeeklyTrend } from "./v2/adminDashboard.types";
+import { IGNORED_USER_IDS } from "./adminDashboard.constants";
 
 export class AdminDashboardManager {
     private static instance: AdminDashboardManager;
@@ -51,28 +52,36 @@ export class AdminDashboardManager {
             // Process user activity data
             if (userActivitySnapshot) {
                 userActivitySnapshot.forEach((doc) => {
-                    const data = doc.data() as FirebaseUserActivity;
-                    this.userActivityMap.set(doc.id, {
-                        ...data,
-                        createdAt: this.convertTimestampToDate(data.createdAt) ?? new Date(0),
-                        lastUpdated: this.convertTimestampToDate(data.lastUpdated) ?? new Date(0)
-                    });
+                    if (!IGNORED_USER_IDS.includes(doc.id)) {
+                        const data = doc.data() as FirebaseUserActivity;
+                        this.userActivityMap.set(doc.id, {
+                            ...data,
+                            createdAt: this.convertTimestampToDate(data.createdAt) ?? new Date(0),
+                            lastUpdated: this.convertTimestampToDate(data.lastUpdated) ?? new Date(0)
+                        });
+                    }
                 });
+
+                console.log("user activity map: " + JSON.stringify(this.userActivityMap))
             }
 
             // Process user information data
             if (userInformationSnapshot) {
                 userInformationSnapshot.forEach((doc) => {
-                    const data = doc.data() as FirebaseUserInformation;
-                    this.userInformationMap.set(doc.id, data);
+                    if (!IGNORED_USER_IDS.includes(doc.id)) {
+                        const data = doc.data() as FirebaseUserInformation;
+                        this.userInformationMap.set(doc.id, data);
+                    }
                 });
             }
 
             // Process letters data
             if (lettersSnapshot) {
                 lettersSnapshot.forEach((doc) => {
-                    const data = doc.data() as FirebaseLetters;
-                    this.letterDataMap.set(doc.id, data);
+                    if (!IGNORED_USER_IDS.includes(doc.id)) {
+                        const data = doc.data() as FirebaseLetters;
+                        this.letterDataMap.set(doc.id, data);
+                    }
                 });
             }
 
@@ -85,6 +94,7 @@ export class AdminDashboardManager {
             console.log('✅ Admin dashboard data loaded successfully');
             console.log(`📊 Processed ${this.userActivityMap.size} user activities, ${this.userInformationMap.size} user profiles, ${this.letterDataMap.size} letter records`);
             console.log('📈 Metrics calculated:', this.dashboardMetrics);
+            console.log(this.getUserActivityMap());
 
         } catch (error) {
             console.error('❌ Error initializing admin dashboard:', error);
@@ -133,6 +143,8 @@ export class AdminDashboardManager {
         );
         const totalUsageTime = usersWithUsageTime.reduce((sum, activity) => sum + activity.totalActiveTime, 0);
         const averageUsageTime = usersWithUsageTime.length > 0 ? (totalUsageTime / usersWithUsageTime.length / 60) : 0;
+        const averageUsageTimeLast30Days = this.calculateAverageUsageTimeLast30Days();
+        const avergaeUsageTimeLast30DaysAllUsers = this.calculateAverageUsageTimeLast30DaysAllUsers();
 
         // Session duration calculation
         const averageSessionDuration = this.calculateAverageSessionDuration();
@@ -159,6 +171,8 @@ export class AdminDashboardManager {
             studentUsers,
             privateUsers,
             averageUsageTime,
+            averageActiveUserUsageTimeLast30Days: averageUsageTimeLast30Days,
+            avergaeUsageTimeLast30DaysAllUsers,
             dailyActiveUsers,
             weeklyActiveUsers,
             monthlyActiveUsers,
@@ -176,6 +190,74 @@ export class AdminDashboardManager {
             letterPerformance,
             timeBasedMetrics
         };
+    }
+
+
+    calculateAverageUsageTimeLast30Days(): number {
+        const activeUserIds = this.getActiveUsersInPeriod(30);
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        console.log('🔍 Active users in last 30 days:', activeUserIds.length);
+        console.log('📅 Date range:', thirtyDaysAgo.toISOString().split('T')[0], 'to', new Date().toISOString().split('T')[0]);
+        
+        let totalUsageTime = 0;
+        let userCount = 0;
+        
+        activeUserIds.forEach(userId => {
+            const activity = this.userActivityMap.get(userId);
+            if (activity?.dailyTimes) {
+                let userUsageTime = 0;
+                let validDays = 0;
+                
+                Object.entries(activity.dailyTimes).forEach(([dateKey, dailyTime]) => {
+                    const activityDate = new Date(dateKey);
+                    if (activityDate >= thirtyDaysAgo && typeof dailyTime === 'number') {
+                        userUsageTime += dailyTime;
+                        validDays++;
+                        console.log(`👤 User ${userId}: ${dateKey} = ${dailyTime}s (${(dailyTime/60).toFixed(1)}m)`);
+                    }
+                });
+                
+                if (userUsageTime > 0) {
+                    totalUsageTime += userUsageTime;
+                    userCount++;
+                    console.log(`📊 User ${userId} total: ${userUsageTime}s (${(userUsageTime/60).toFixed(1)}m) over ${validDays} days`);
+                }
+            }
+        });
+        
+        const totalAvgMinutes = userCount > 0 ? (totalUsageTime / userCount / 60) : 0;
+        const dailyAvgMinutes = totalAvgMinutes / 30; // Daily average over 30 days
+        
+        console.log(`🎯 Total 30-day average: ${totalAvgMinutes.toFixed(1)}m per user`);
+        console.log(`📅 Daily average: ${dailyAvgMinutes.toFixed(1)}m per user per day`);
+        
+        return totalAvgMinutes; // Return total 30-day average
+    }
+
+    calculateAverageUsageTimeLast30DaysAllUsers(): number {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        let totalUsageTime = 0;
+        const totalUsers = this.userActivityMap.size;
+        
+        this.userActivityMap.forEach((activity, userId) => {
+            if (activity?.dailyTimes) {
+                Object.entries(activity.dailyTimes).forEach(([dateKey, dailyTime]) => {
+                    const activityDate = new Date(dateKey);
+                    if (activityDate >= thirtyDaysAgo && typeof dailyTime === 'number') {
+                        totalUsageTime += dailyTime;
+                    }
+                });
+            }
+        });
+        
+        const avgMinutes = totalUsers > 0 ? (totalUsageTime / totalUsers / 60) : 0;
+        console.log(`📊 All users average (30 days): ${totalUsageTime}s total ÷ ${totalUsers} users = ${avgMinutes.toFixed(1)}m per user`);
+        
+        return avgMinutes;
     }
 
     private calculateAverageSessionDuration(): number {

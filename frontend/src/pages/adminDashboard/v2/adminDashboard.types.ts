@@ -10,6 +10,8 @@ export interface DashboardMetrics {
 
     // Usage Metrics
     averageUsageTime: number; // in minutes
+    averageActiveUserUsageTimeLast30Days: number;
+    avergaeUsageTimeLast30DaysAllUsers: number;
     dailyActiveUsers: number;
     weeklyActiveUsers: number;
     monthlyActiveUsers: number;

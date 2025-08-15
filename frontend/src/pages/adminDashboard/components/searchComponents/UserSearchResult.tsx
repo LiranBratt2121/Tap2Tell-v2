@@ -42,6 +42,17 @@ export const UserSearchResults: React.FC<{ result: any }> = ({ result }) => {
     }
   };
 
+  const getLastUsageTimes = (dailyTimes: any, limit = 5) => {
+    if (!dailyTimes) return [];
+    return Object.entries(dailyTimes)
+      .sort(([dateA], [dateB]) => new Date(dateB).getTime() - new Date(dateA).getTime())
+      .slice(0, limit)
+      .map(([date, time]) => ({
+        date: new Date(date).toLocaleDateString('he-IL'),
+        time: formatTime(time as number)
+      }));
+  };
+
   return (
     <UserResultsContainer>
       <SectionTitle>פרטי משתמש: {result.userId}</SectionTitle>
@@ -63,6 +74,21 @@ export const UserSearchResults: React.FC<{ result: any }> = ({ result }) => {
           <MetricLabel>פעילות</MetricLabel>
           <MetricDescription>סה"כ זמן שימוש: {formatTime(result.activity.totalActiveTime)}</MetricDescription>
           <MetricDescription>עודכן לאחרונה: {formatDate(result.activity.lastUpdated)}</MetricDescription>
+          
+          {/* Last 5 Usage Times */}
+          {result.activity.dailyTimes && (
+            <>
+              <ChartTitle style={{ marginTop: '16px', marginBottom: '8px' }}>5 זמני שימוש אחרונים</ChartTitle>
+              <TrendsList>
+                {getLastUsageTimes(result.activity.dailyTimes).map((usage, index) => (
+                  <TrendItem key={index}>
+                    <TrendDate>{usage.date}</TrendDate>
+                    <TrendValue>{usage.time}</TrendValue>
+                  </TrendItem>
+                ))}
+              </TrendsList>
+            </>
+          )}
         </UserActivityCard>
       ) : (
         <UserActivityCard>
