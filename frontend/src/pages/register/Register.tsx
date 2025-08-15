@@ -6,7 +6,6 @@ import { SelectionGroup } from '../../components/selectionGroup/SelectionGroup';
 import { useTranslation } from 'react-i18next';
 import setTaps2tellLanguage from '../../i18n/setLanguage';
 import { languages, roles } from '../../components/selectionGroup/options';
-import { SendButton } from '../../components/buttons/SendButton';
 import { Container, FormContainer } from '../../components/container/PageContainer';
 import { Title } from '../../components/selectionGroup/styles.selectionGroup';
 import AcceptButton from '../../components/buttons/AcceptButton';

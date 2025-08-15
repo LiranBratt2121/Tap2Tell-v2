@@ -1,6 +1,6 @@
-import { FirebaseLetters, FirebaseUserActivity, FirebaseUserInformation } from "../../../firebase/interfaces";
-import { fetchCollection } from "../../../firebase/UserInformation";
-import { DailyTrend, DashboardMetrics, HourlyUsage, LetterPerformanceData, UserSearchResult, WeeklyTrend } from "./adminDashboard.types";
+import { FirebaseLetters, FirebaseUserActivity, FirebaseUserInformation } from "../../firebase/interfaces";
+import { fetchCollection } from "../../firebase/UserInformation";
+import { DailyTrend, DashboardMetrics, HourlyUsage, LetterPerformanceData, UserSearchResult, WeeklyTrend } from "./v2/adminDashboard.types";
 
 export class AdminDashboardManager {
     private static instance: AdminDashboardManager;

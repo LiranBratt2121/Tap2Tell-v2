@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDashboardContext } from "../contexts/DashboardContext";
-import { AdminDashboardManager } from "../v2/manager";
+import { AdminDashboardManager } from "../manager";
 
 export const useUserSearch = () => {
   const { searchResult, searchLoading, searchError, dispatch } = useDashboardContext();

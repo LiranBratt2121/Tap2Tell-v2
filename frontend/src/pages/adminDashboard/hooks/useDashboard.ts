@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { AdminDashboardManager } from '../v2/manager';
+import { AdminDashboardManager } from '../manager';
 import { useDashboardContext } from '../contexts/DashboardContext';
 
 export const useDashboard = () => {

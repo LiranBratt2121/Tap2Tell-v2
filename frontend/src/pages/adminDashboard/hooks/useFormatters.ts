@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { AdminDashboardManager } from "../v2/manager";
+import { AdminDashboardManager } from "../manager";
 
 // Utility hooks for formatting
 export const useFormatters = () => {

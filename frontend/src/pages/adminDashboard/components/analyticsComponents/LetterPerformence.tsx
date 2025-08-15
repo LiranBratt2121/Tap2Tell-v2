@@ -2,7 +2,7 @@ import { useDashboard } from "../../hooks/useDashboard";
 import { useFormatters } from "../../hooks/useFormatters";
 import { HEBREW_LETTER_NAMES } from "../../v2/adminDashboard.constants";
 import { SectionTitle, LetterGrid, LetterCard, LetterName, LetterStats, ChartsContainer, ChartCard, ChartTitle, TrendsList, TrendItem, TrendDate, TrendValue } from "../../v2/adminDashboard.styles";
-import { AdminDashboardManager } from "../../v2/manager";
+import { AdminDashboardManager } from "../../manager";
 
 export const LetterPerformance: React.FC = () => {
   const { metrics } = useDashboard();

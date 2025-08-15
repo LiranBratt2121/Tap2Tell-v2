@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {  } from 'react';
 
 import { useDashboard } from './hooks/useDashboard';
 import { Title } from '../login/styles.login';
@@ -8,7 +8,6 @@ import { DashboardHeader } from './components/headerComponents/DashboardHeader';
 import { MetricsOverview } from './components/metrixComponents/MetricsOverview';
 import { UserSearch } from './components/searchComponents/UserSearch';
 import { ErrorState } from './components/stateComponents/ErrorState';
-import { LoadingState } from './components/stateComponents/LoadingState';
 import { DashboardProvider } from './contexts/DashboardContext';
 import { DashboardContainer, Header } from './v2/adminDashboard.styles';
 
