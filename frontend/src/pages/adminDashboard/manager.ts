@@ -243,7 +243,7 @@ export class AdminDashboardManager {
         let totalUsageTime = 0;
         const totalUsers = this.userActivityMap.size;
         
-        this.userActivityMap.forEach((activity, userId) => {
+        this.userActivityMap.forEach((activity) => {
             if (activity?.dailyTimes) {
                 Object.entries(activity.dailyTimes).forEach(([dateKey, dailyTime]) => {
                     const activityDate = new Date(dateKey);

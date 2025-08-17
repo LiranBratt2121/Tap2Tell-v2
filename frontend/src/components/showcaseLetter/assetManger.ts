@@ -64,7 +64,7 @@ import LamedEnglishAudio from "../../assets/audio/LamedEnglish.mp3";
 import MemEnglishAudio from "../../assets/audio/MemEnglish.mp3";
 import NunEnglishAudio from "../../assets/audio/NunEnglish.mp3";
 import SamechEnglishAudio from "../../assets/audio/SamechEnglish.mp3";
-import AyinEnglishAudio from "../../assets/audio/AlefEnglish.mp3";
+import AyinEnglishAudio from "../../assets/audio/AinEnglish.mp3";
 import PehEnglishAudio from "../../assets/audio/PehEnglish.mp3";
 import TsadehEnglishAudio from "../../assets/audio/TsadikEnglish.mp3";
 import QofEnglishAudio from "../../assets/audio/KufEnglish.mp3";
